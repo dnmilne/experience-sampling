@@ -1,0 +1,159 @@
+<div class='container'>
+
+	<div class='row'>
+
+		<h1>Rest API <small>Manage XP from code</small></h1>
+
+		<br/>
+
+		<p>
+			All of XP's functionality can be driven from the REST api described below. 
+		</p>
+
+		<p>
+			The API uses <a href='http://en.wikipedia.org/wiki/Basic_access_authentication'>basic authentication</a>, so you will need to add the appropriate header (with your encoded username and password) to access it.
+		</p>
+		
+	</div>
+
+	<div ng-repeat='api in apis' class='spaced'>
+	
+		<hr/>
+
+		<h3 ng-click='api.expanded = !api.expanded' class='clickable'>
+			<span ng-hide='api.expanded'><i class="fa fa-plus-square"></i>&nbsp;</span>
+			<span ng-show='api.expanded'><i class="fa fa-minus-square"></i>&nbsp;</span>
+
+			{{api.description}}
+		</h3>
+
+		<!--<span class="small text-muted">{{api.details.models}}</span>-->
+		
+		<div ng-repeat='resource in api.details.apis' ng-show='api.expanded'>
+
+			<div ng-repeat='operation in resource.operations' class='indent spaced'>
+				<h4 ng-click='operation.expanded = !operation.expanded' class='clickable'>
+					<span ng-hide='operation.expanded'><i class="fa fa-plus-square"></i>&nbsp;</span>
+					<span ng-show='operation.expanded'><i class="fa fa-minus-square"></i>&nbsp;</span>
+
+					<span class='label {{getMethodClass(operation.method)}}'>{{operation.method}}</span> 
+					<span ng-bind-html="formatPath(resource.path)"></span>
+				</h4>
+
+				<p ng-hide='operation.expanded' class='indent'>
+					{{operation.summary}}
+				</p>
+
+				<div ng-show='operation.expanded' class='indent'>
+					<p ng-bind-html="operation.notes | markdown">
+					</p>
+
+					<br/>
+
+					<div class='row'>
+						<api-parameter ng-repeat='(paramIndex, param) in operation.parameters | filter:{ paramType: "path"}' param='param' param-index='paramIndex' models='api.details.models' ></api-parameter>
+
+						<api-parameter ng-repeat='(paramIndex, param) in operation.parameters | filter:{ paramType: "body"}' param='param' param-index='paramIndex' models='api.details.models' ></api-parameter>
+
+
+						<api-parameter ng-repeat='(paramIndex, param) in operation.parameters | filter:{ paramType: "query"}' param='param' param-index='paramIndex' models='api.details.models' ></api-parameter>
+					</div>
+
+					<br/>
+						
+					<div class='row'>
+						<div ng-repeat='(responseIndex, response) in operation.responseMessages'>	
+							<api-response response='response' response-index='responseIndex' models='api.details.models'></api-response>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		
+
+
+	</div>
+
+	<script type="text/ng-template" id="apiParameter.html">
+		<div>
+			<div class='text-right col-sm-2'>
+				<span class='text-muted' ng-show='paramIndex == 0'>{{param.paramType}} parameters: </span>
+			</div>
+			<div class='col-sm-10'>
+				<p>
+					<span ng-show='{{param.required}}' tooltip='mandatory' tooltip-placement='left'><i class="fa fa-circle"></i></span> 
+					<span ng-hide='{{param.required}}' tooltip='optional' tooltip-placement='left'><i class="fa fa-circle-o"></i></span>
+					&nbsp;
+					<strong>{{param.name}}</strong> 
+
+					<api-object-badge property-type='param.type' models='models'></api-object-badge>
+
+					&nbsp;
+
+					<span>{{param.description}}</span>
+					<span ng-bind-html="getEnumDescription(param)"></span>
+				</p>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/ng-template" id="apiResponse.html">
+		<div>
+			<div class='col-sm-2 text-right'>
+				<span class='text-muted' ng-show='responseIndex == 0'>responses:</span>
+			</div>
+
+			<div class='col-sm-10'>
+				<p>
+					<span class='label {{getResponseCodeClass(response.code)}}'>{{response.code}}</span>
+					&nbsp;
+					<strong>{{response.message}}</strong>
+					&nbsp;
+
+					<api-object-badge ng-show='response.responseModel' response-model='response.responseModel' models='models' />
+				</p>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/ng-template" id="apiObjectBadge.html">
+		<span>
+			<a class='badge' ng-show='object' ng-click='showModal()'>{{fullObjectName}}</a>
+			<span class='badge' ng-hide='object'>{{fullObjectName}}</span>
+		</span>
+	</script>
+
+
+	<script type="text/ng-template" id="modalApiObject.html">
+
+	   <div class='modal-header'>
+	   		<button type="button" class="close" ng-click='$dismiss()'><span aria-hidden="true">&times;</span></button>
+
+	   		<strong>{{object.id}}</strong>
+	   </div>
+
+      <div class='modal-body'>
+
+      	<p>
+      		{{object.description}}
+      	</p>
+
+      	
+      	<p class='indent' ng-repeat='(propertyId, property) in object.properties'>
+      		<strong>{{propertyId}}</strong>
+
+      		<api-object-badge property-type='property.type' property-ref='property.$ref' models='models'></api-object-badge>
+
+      		<span>{{property.description}}</span> 
+
+      		<span ng-bind-html="getEnumDescription(property)"></span>
+      	</p>
+
+      </div>
+	</script>
+
+</div>
+
+

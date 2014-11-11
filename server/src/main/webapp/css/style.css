@@ -1,0 +1,37 @@
+.indent {
+    padding-left: 20px ;
+}
+
+
+
+
+.debug {
+	border: 1px solid red ;
+}
+
+.debug svg {
+	border: 1px solid green ;
+}
+
+
+mood-canvas svg {
+	border: 1px solid black;
+}
+
+.dot {
+  fill: lightsteelblue;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.dot.dragging {
+  fill: red;
+  stroke: brown;
+}
+
+.axis line {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}

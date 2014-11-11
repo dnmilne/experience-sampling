@@ -1,0 +1,30 @@
+{
+  "name": "experience-sampling",
+  "version": "0.0.1",
+  "dependencies": {
+
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-sanitize": "latest",
+    "angular-cookies": "latest",
+    "angular-base64" : "latest",
+
+    "restangular": "latest",
+
+    "bootstrap": "latest",
+    "angular-bootstrap": "latest",
+
+    "underscore": "latest",
+
+    "moment" : "latest",
+
+    "showdown" : "latest",
+
+    "jquery": "latest",
+
+    "fontawesome": "latest",
+
+    "d3": "latest"
+  },
+  "private": true
+}

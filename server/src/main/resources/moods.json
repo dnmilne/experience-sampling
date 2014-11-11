@@ -1,0 +1,505 @@
+[ {
+  "valence" : -0.504,
+  "arousal" : 0.06999999999999984,
+  "name" : "aggravated"
+}, {
+  "valence" : 0.4099999999999999,
+  "arousal" : -0.14600000000000013,
+  "name" : "amused"
+}, {
+  "valence" : -0.494,
+  "arousal" : 0.24,
+  "name" : "angry"
+}, {
+  "valence" : -0.44000000000000006,
+  "arousal" : 0.05800000000000005,
+  "name" : "annoyed"
+}, {
+  "valence" : -0.24,
+  "arousal" : 0.24,
+  "name" : "anxious"
+}, {
+  "valence" : -0.264,
+  "arousal" : -0.24,
+  "name" : "apathetic"
+}, {
+  "valence" : 0.3999999999999999,
+  "arousal" : 0.0,
+  "name" : "artistic"
+}, {
+  "valence" : 0.35199999999999987,
+  "arousal" : 0.10000000000000009,
+  "name" : "awake"
+}, {
+  "valence" : -0.378,
+  "arousal" : -0.03400000000000003,
+  "name" : "bitchy"
+}, {
+  "valence" : -0.264,
+  "arousal" : -0.24,
+  "name" : "blah"
+}, {
+  "valence" : -0.06600000000000006,
+  "arousal" : -0.42000000000000004,
+  "name" : "blank"
+}, {
+  "valence" : -0.4099999999999999,
+  "arousal" : -0.27,
+  "name" : "bored"
+}, {
+  "valence" : 0.32799999999999985,
+  "arousal" : -0.09199999999999997,
+  "name" : "bouncy"
+}, {
+  "valence" : 0.08200000000000007,
+  "arousal" : -0.09600000000000009,
+  "name" : "busy"
+}, {
+  "valence" : 0.3779999999999999,
+  "arousal" : -0.666,
+  "name" : "calm"
+}, {
+  "valence" : 0.6000000000000001,
+  "arousal" : 0.1519999999999999,
+  "name" : "cheerful"
+}, {
+  "valence" : 0.18999999999999995,
+  "arousal" : -0.050000000000000044,
+  "name" : "chipper"
+}, {
+  "valence" : -0.1359999999999999,
+  "arousal" : -0.29000000000000004,
+  "name" : "cold"
+}, {
+  "valence" : -0.09399999999999997,
+  "arousal" : -0.258,
+  "name" : "complacent"
+}, {
+  "valence" : -0.378,
+  "arousal" : -0.1439999999999999,
+  "name" : "confused"
+}, {
+  "valence" : 0.45199999999999996,
+  "arousal" : -0.49,
+  "name" : "contemplative"
+}, {
+  "valence" : 0.3400000000000001,
+  "arousal" : -0.366,
+  "name" : "content"
+}, {
+  "valence" : -0.4,
+  "arousal" : -0.05800000000000005,
+  "name" : "cranky"
+}, {
+  "valence" : -0.53,
+  "arousal" : 0.052000000000000046,
+  "name" : "crappy"
+}, {
+  "valence" : 0.028000000000000025,
+  "arousal" : 0.18000000000000016,
+  "name" : "crazy"
+}, {
+  "valence" : 0.4119999999999999,
+  "arousal" : -0.027999999999999914,
+  "name" : "creative"
+}, {
+  "valence" : -0.42599999999999993,
+  "arousal" : 0.014000000000000012,
+  "name" : "crushed"
+}, {
+  "valence" : 0.31600000000000006,
+  "arousal" : 0.14800000000000013,
+  "name" : "curious"
+}, {
+  "valence" : -0.3400000000000001,
+  "arousal" : -0.04399999999999993,
+  "name" : "cynical"
+}, {
+  "valence" : -0.546,
+  "arousal" : -0.15000000000000002,
+  "name" : "depressed"
+}, {
+  "valence" : 0.516,
+  "arousal" : 0.10399999999999987,
+  "name" : "determined"
+}, {
+  "valence" : -0.28600000000000003,
+  "arousal" : -0.23399999999999999,
+  "name" : "devious"
+}, {
+  "valence" : -0.366,
+  "arousal" : 0.010000000000000009,
+  "name" : "dirty"
+}, {
+  "valence" : -0.47,
+  "arousal" : -0.1060000000000001,
+  "name" : "disappointed"
+}, {
+  "valence" : -0.44999999999999996,
+  "arousal" : -0.06600000000000006,
+  "name" : "discontent"
+}, {
+  "valence" : -0.32400000000000007,
+  "arousal" : 0.256,
+  "name" : "distressed"
+}, {
+  "valence" : -0.38,
+  "arousal" : -0.29600000000000004,
+  "name" : "ditzy"
+}, {
+  "valence" : 0.02400000000000002,
+  "arousal" : -0.09999999999999998,
+  "name" : "dorky"
+}, {
+  "valence" : -0.14200000000000002,
+  "arousal" : -0.266,
+  "name" : "drained"
+}, {
+  "valence" : -0.18800000000000006,
+  "arousal" : 0.010000000000000009,
+  "name" : "drunk"
+}, {
+  "valence" : 0.29000000000000004,
+  "arousal" : 0.3900000000000001,
+  "name" : "ecstatic"
+}, {
+  "valence" : -0.29800000000000004,
+  "arousal" : 0.07600000000000007,
+  "name" : "embarrassed"
+}, {
+  "valence" : 0.514,
+  "arousal" : 0.21999999999999997,
+  "name" : "energetic"
+}, {
+  "valence" : -0.534,
+  "arousal" : 0.04400000000000004,
+  "name" : "enraged"
+}, {
+  "valence" : 0.6000000000000001,
+  "arousal" : 0.05600000000000005,
+  "name" : "enthralled"
+}, {
+  "valence" : -0.29600000000000004,
+  "arousal" : 0.020000000000000018,
+  "name" : "envious"
+}, {
+  "valence" : 0.6219999999999999,
+  "arousal" : 0.28600000000000003,
+  "name" : "excited"
+}, {
+  "valence" : -0.358,
+  "arousal" : -0.09600000000000009,
+  "name" : "exhausted"
+}, {
+  "valence" : 0.3039999999999998,
+  "arousal" : 0.18199999999999994,
+  "name" : "flirty"
+}, {
+  "valence" : -0.49,
+  "arousal" : 0.08000000000000007,
+  "name" : "frustrated"
+}, {
+  "valence" : 0.19999999999999996,
+  "arousal" : -0.30400000000000005,
+  "name" : "full"
+}, {
+  "valence" : 0.23399999999999999,
+  "arousal" : 0.06400000000000006,
+  "name" : "giddy"
+}, {
+  "valence" : 0.5900000000000001,
+  "arousal" : 0.07799999999999985,
+  "name" : "giggly"
+}, {
+  "valence" : -0.37,
+  "arousal" : -0.3360000000000001,
+  "name" : "gloomy"
+}, {
+  "valence" : 0.5779999999999998,
+  "arousal" : -0.268,
+  "name" : "good"
+}, {
+  "valence" : 0.5,
+  "arousal" : -0.14200000000000002,
+  "name" : "grateful"
+}, {
+  "valence" : -0.19000000000000006,
+  "arousal" : -0.42000000000000004,
+  "name" : "groggy"
+}, {
+  "valence" : -0.43799999999999994,
+  "arousal" : 0.010000000000000009,
+  "name" : "grumpy"
+}, {
+  "valence" : -0.382,
+  "arousal" : -0.06999999999999995,
+  "name" : "guilty"
+}, {
+  "valence" : 0.6940000000000002,
+  "arousal" : 0.20999999999999996,
+  "name" : "happy"
+}, {
+  "valence" : 0.15399999999999991,
+  "arousal" : -0.18000000000000005,
+  "name" : "high"
+}, {
+  "valence" : 0.488,
+  "arousal" : -0.03200000000000003,
+  "name" : "hopeful"
+}, {
+  "valence" : 0.3679999999999999,
+  "arousal" : 0.256,
+  "name" : "horny"
+}, {
+  "valence" : 0.14600000000000013,
+  "arousal" : -0.04800000000000004,
+  "name" : "hot"
+}, {
+  "valence" : -0.29200000000000004,
+  "arousal" : 0.11999999999999988,
+  "name" : "hungry"
+}, {
+  "valence" : 0.02200000000000002,
+  "arousal" : 0.10399999999999987,
+  "name" : "hyper"
+}, {
+  "valence" : 0.3320000000000001,
+  "arousal" : -0.019999999999999907,
+  "name" : "impressed"
+}, {
+  "valence" : 0.010000000000000009,
+  "arousal" : 0.14000000000000012,
+  "name" : "indescribable"
+}, {
+  "valence" : -0.1439999999999999,
+  "arousal" : -0.362,
+  "name" : "indifferent"
+}, {
+  "valence" : -0.474,
+  "arousal" : 0.18000000000000016,
+  "name" : "infuriated"
+}, {
+  "valence" : -0.4,
+  "arousal" : -0.134,
+  "name" : "intimidated"
+}, {
+  "valence" : -0.42000000000000004,
+  "arousal" : -0.05800000000000005,
+  "name" : "irate"
+}, {
+  "valence" : -0.474,
+  "arousal" : -0.018000000000000016,
+  "name" : "irritated"
+}, {
+  "valence" : -0.524,
+  "arousal" : 0.18000000000000016,
+  "name" : "jealous"
+}, {
+  "valence" : 0.31199999999999983,
+  "arousal" : 0.028000000000000025,
+  "name" : "jubilant"
+}, {
+  "valence" : -0.39,
+  "arousal" : -0.39,
+  "name" : "lazy"
+}, {
+  "valence" : -0.23199999999999998,
+  "arousal" : -0.33399999999999996,
+  "name" : "lethargic"
+}, {
+  "valence" : -0.23199999999999998,
+  "arousal" : -0.33399999999999996,
+  "name" : "listless"
+}, {
+  "valence" : -0.46599999999999997,
+  "arousal" : -0.126,
+  "name" : "lonely"
+}, {
+  "valence" : 0.53,
+  "arousal" : 0.11799999999999988,
+  "name" : "loved"
+}, {
+  "valence" : -0.252,
+  "arousal" : -0.17400000000000004,
+  "name" : "melancholy"
+}, {
+  "valence" : 0.33599999999999985,
+  "arousal" : -0.43799999999999994,
+  "name" : "mellow"
+}, {
+  "valence" : -0.10399999999999987,
+  "arousal" : -0.02400000000000002,
+  "name" : "mischievous"
+}, {
+  "valence" : -0.258,
+  "arousal" : 0.0,
+  "name" : "moody"
+}, {
+  "valence" : -0.252,
+  "arousal" : -0.17400000000000004,
+  "name" : "morose"
+}, {
+  "valence" : 0.20799999999999996,
+  "arousal" : 0.3900000000000001,
+  "name" : "naughty"
+}, {
+  "valence" : -0.61,
+  "arousal" : -0.16400000000000003,
+  "name" : "nauseated"
+}, {
+  "valence" : -0.06400000000000006,
+  "arousal" : -0.14,
+  "name" : "nerdy"
+}, {
+  "valence" : -0.28800000000000003,
+  "arousal" : 0.10199999999999987,
+  "name" : "nervous"
+}, {
+  "valence" : 0.33599999999999985,
+  "arousal" : -0.126,
+  "name" : "nostalgic"
+}, {
+  "valence" : -0.242,
+  "arousal" : -0.5,
+  "name" : "numb"
+}, {
+  "valence" : 0.5779999999999998,
+  "arousal" : -0.268,
+  "name" : "okay"
+}, {
+  "valence" : 0.49,
+  "arousal" : -0.16199999999999992,
+  "name" : "optimistic"
+}, {
+  "valence" : 0.6000000000000001,
+  "arousal" : -0.124,
+  "name" : "peaceful"
+}, {
+  "valence" : 0.45199999999999996,
+  "arousal" : -0.49,
+  "name" : "pensive"
+}, {
+  "valence" : -0.21999999999999997,
+  "arousal" : -0.10399999999999987,
+  "name" : "pessimistic"
+}, {
+  "valence" : -0.494,
+  "arousal" : 0.24,
+  "name" : "pissed off"
+}, {
+  "valence" : 0.5640000000000001,
+  "arousal" : -0.15000000000000002,
+  "name" : "pleased"
+}, {
+  "valence" : 0.474,
+  "arousal" : -0.08000000000000007,
+  "name" : "productive"
+}, {
+  "valence" : -0.06600000000000006,
+  "arousal" : 0.19999999999999996,
+  "name" : "quixotic"
+}, {
+  "valence" : 0.4099999999999999,
+  "arousal" : -0.19999999999999996,
+  "name" : "refreshed"
+}, {
+  "valence" : -0.52,
+  "arousal" : -0.05999999999999994,
+  "name" : "rejected"
+}, {
+  "valence" : 0.4099999999999999,
+  "arousal" : -0.19999999999999996,
+  "name" : "rejuvenated"
+}, {
+  "valence" : 0.44999999999999996,
+  "arousal" : -0.502,
+  "name" : "relaxed"
+}, {
+  "valence" : 0.32600000000000007,
+  "arousal" : -0.11599999999999999,
+  "name" : "relieved"
+}, {
+  "valence" : -0.274,
+  "arousal" : -0.19000000000000006,
+  "name" : "restless"
+}, {
+  "valence" : -0.19000000000000006,
+  "arousal" : 0.31000000000000005,
+  "name" : "rushed"
+}, {
+  "valence" : -0.58,
+  "arousal" : -0.30199999999999994,
+  "name" : "sad"
+}, {
+  "valence" : 0.43199999999999994,
+  "arousal" : -0.20999999999999996,
+  "name" : "satisfied"
+}, {
+  "valence" : -0.44000000000000006,
+  "arousal" : 0.21999999999999997,
+  "name" : "scared"
+}, {
+  "valence" : -0.07400000000000007,
+  "arousal" : 0.06000000000000005,
+  "name" : "shocked"
+}, {
+  "valence" : -0.542,
+  "arousal" : -0.06600000000000006,
+  "name" : "sick"
+}, {
+  "valence" : 0.34399999999999986,
+  "arousal" : -0.027999999999999914,
+  "name" : "silly"
+}, {
+  "valence" : -0.1279999999999999,
+  "arousal" : -0.392,
+  "name" : "sleepy"
+}, {
+  "valence" : -0.44000000000000006,
+  "arousal" : -0.18800000000000006,
+  "name" : "sore"
+}, {
+  "valence" : -0.476,
+  "arousal" : 0.13000000000000012,
+  "name" : "stressed"
+}, {
+  "valence" : 0.31400000000000006,
+  "arousal" : 0.18999999999999995,
+  "name" : "surprised"
+}, {
+  "valence" : 0.3340000000000001,
+  "arousal" : -0.34199999999999997,
+  "name" : "sympathetic"
+}, {
+  "valence" : 0.552,
+  "arousal" : -0.09600000000000009,
+  "name" : "thankful"
+}, {
+  "valence" : -0.10399999999999987,
+  "arousal" : -0.18399999999999994,
+  "name" : "thirsty"
+}, {
+  "valence" : 0.45199999999999996,
+  "arousal" : -0.49,
+  "name" : "thoughtful"
+}, {
+  "valence" : -0.14200000000000002,
+  "arousal" : -0.266,
+  "name" : "tired"
+}, {
+  "valence" : 0.3320000000000001,
+  "arousal" : -0.019999999999999907,
+  "name" : "touched"
+}, {
+  "valence" : -0.45999999999999996,
+  "arousal" : 0.10000000000000009,
+  "name" : "uncomfortable"
+}, {
+  "valence" : 0.018000000000000016,
+  "arousal" : -0.14200000000000002,
+  "name" : "weird"
+}, {
+  "valence" : -0.346,
+  "arousal" : 0.16199999999999992,
+  "name" : "worried"
+} ]
