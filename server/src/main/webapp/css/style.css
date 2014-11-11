@@ -6,16 +6,16 @@
 
 
 .debug {
-	border: 1px solid red ;
+  border: 1px solid red ;
 }
 
 .debug svg {
-	border: 1px solid green ;
+  border: 1px solid green ;
 }
 
 
 mood-canvas svg {
-	border: 1px solid black;
+  border: 1px solid black;
 }
 
 .dot {
@@ -34,4 +34,30 @@ mood-canvas svg {
   stroke: #ddd;
   shape-rendering: crispEdges;
   vector-effect: non-scaling-stroke;
+}
+
+/* EXPERIENCE TABLE */
+
+.filterable {
+    margin-top: 15px;
+}
+.filterable .panel-heading .pull-right {
+    margin-top: -20px;
+}
+.filterable .filters input[disabled] {
+    background-color: transparent;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+    padding: 0;
+    height: auto;
+}
+.filterable .filters input[disabled]::-webkit-input-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]::-moz-placeholder {
+    color: #333;
+}
+.filterable .filters input[disabled]:-ms-input-placeholder {
+    color: #333;
 }
