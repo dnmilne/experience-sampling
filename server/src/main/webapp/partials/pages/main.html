@@ -79,13 +79,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2014</td>
-                        <td>Mark</td>
-                        <td>#Otto #Lol #123</td>
-                        <td>Sad</td>
-                        <td>Happy</td>
-                    </tr>
+                	<tr ng-repeat="exp in experiences">
+						<td>{{exp.date}}</td>
+						<td>{{exp.description}}</td>
+						<td>
+							 <span ng-repeat="tag in exp.tags">{{tag}}&nbsp;</span>
+						</td>
+						<td>{{exp.moodBefore}}</td>
+						<td>{{exp.moodAfter}}</td>
+					</tr>
                 </tbody>
             </table>
         </div>

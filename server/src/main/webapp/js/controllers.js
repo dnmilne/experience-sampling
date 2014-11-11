@@ -13,7 +13,6 @@ app
 	} ;
 
 	if (Auth.hasCredentials()) {
-
 		Restangular.one("users","me").get().then(
 			function (data) {
 				console.log(data) ;
@@ -102,6 +101,11 @@ app
 		$scope.unauthorized = true ;
 		$scope.me = undefined ;
 	}
+
+	Restangular.all("experiences").getList().then(
+		function (data) {
+			$scope.experiences = data ;
+		});
 
 
 	$scope.$watch("mood", function() {
