@@ -49,7 +49,7 @@ public class UserController extends ControllerBase {
             @ApiParam(value = "A json object representing the new or edited user", required = true)
             @RequestBody User user,
 
-            @RequestHeader(value="Authorization")
+            @RequestHeader(value="Authorization", required=false)
             String auth
     ) throws Unauthorized, NotFound {
 

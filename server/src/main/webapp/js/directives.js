@@ -62,9 +62,13 @@ app
 			}
 
 			function dragged() {
-
-				console.log("dragged") ;
-			  	handle.attr("cx", d3.event.x).attr("cy", d3.event.y);
+				console.log("dragged cx: " + d3.event.x + " cy: " + d3.event.y) ;
+				var r = 15;
+				if(d3.event.x+r < 300 && d3.event.x-r > 0)
+			  		handle.attr("cx", d3.event.x)
+			  	if(d3.event.y+r < 300 && d3.event.y-r > 0)
+			  		handle.attr("cy", d3.event.y);
+			  	handle.style("fill",d3.hsl(d3.event.x,d3.event.y,0.8));
 			}
 
 			function dragended() {
