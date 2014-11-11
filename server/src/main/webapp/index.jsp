@@ -20,6 +20,8 @@
   <!--d3, for sexy visualizations -->
   <script type="text/javascript"  src="bower_components/d3/d3.min.js"></script>
 
+  <!--kd tree implementation from ubilabs -->
+  <script type="text/javascript"  src="js/lib/kd-tree.min.js"></script>
 
   <!--bootstrap and ui-bootstrap, used for styling and common widgets like modals-->
   <script type="text/javascript"  src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>

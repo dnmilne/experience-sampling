@@ -1,7 +1,7 @@
 app
 
 
-.controller('MainCtrl', function($scope, Auth, Restangular) {
+.controller('MainCtrl', function($scope, Auth, Moods, Restangular) {
 
 	$scope.loginOrRegister = "login" ;
 
@@ -106,6 +106,12 @@ app
 
 	$scope.$watch("mood", function() {
 
+		if (!Moods.isReady())
+			return ;
+
+		$scope.nearbyMoods = Moods.getMoodsNear($scope.mood.valence, $scope.mood.arousal) ;
+
+		/*
 		Restangular.all("moods").getList(
 			{near: [$scope.mood.valence, $scope.mood.arousal]}
 		).then(
@@ -117,6 +123,7 @@ app
 				console.log(error) ;
 				$scope.error = error ;
 			}) ;
+		*/
 
 	}, true) ;
 
