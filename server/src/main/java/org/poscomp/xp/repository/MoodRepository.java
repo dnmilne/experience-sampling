@@ -1,6 +1,7 @@
 package org.poscomp.xp.repository;
 
 import org.poscomp.xp.model.IndexedMood;
+import org.poscomp.xp.model.Mood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -46,6 +47,8 @@ public class MoodRepository {
         return mood ;
     }
 
+
+
     public long size() {
         return m.count(new Query(), IndexedMood.class) ;
     }
@@ -59,5 +62,39 @@ public class MoodRepository {
         ) ;
 
         return m.find(query, IndexedMood.class) ;
+    }
+
+
+
+    public void handleMoodModified(Mood newMood, Mood oldMood) {
+
+        if (newMood == null && oldMood == null)
+            return ;
+
+        String name ;
+        if (newMood!= null)
+            name = newMood.getName() ;
+        else
+            name = oldMood.getName() ;
+
+
+        IndexedMood mood = findOne(name) ;
+
+        if (mood == null) {
+
+            if (newMood == null)
+                return ;
+
+            mood = new IndexedMood(name, false, newMood.getValence(), newMood.getArousal()) ;
+        } else {
+
+            if (newMood != null)
+                mood.addSample(newMood);
+
+            if (oldMood != null)
+                mood.removeSample(oldMood);
+        }
+
+        save(mood) ;
     }
 }

@@ -38,10 +38,10 @@ public class ExperienceRepository {
         if (tags != null && tags.length > 0)
             query.addCriteria(Criteria.where("tags").all(tags)) ;
 
-        query.addCriteria(Criteria.where("deleted").is(false)) ;
+        //query.addCriteria(Criteria.where("deleted").is(false)) ;
 
-        query.with(new Sort(Sort.Direction.DESC, "date")) ;
-        query.limit(PAGE_SIZE) ;
+        //query.with(new Sort(Sort.Direction.DESC, "date")) ;
+        //query.limit(PAGE_SIZE) ;
 
         return m.find(query, Experience.class) ;
     }
