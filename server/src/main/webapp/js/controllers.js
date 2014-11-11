@@ -17,6 +17,7 @@ app
 			function (data) {
 				console.log(data) ;
 				$scope.me = data ;
+				updateExperiences() ;
 			},
 			function (error) {
 				console.log(error) ;
@@ -49,6 +50,8 @@ app
 			function (data) {
 				console.log(data) ;
 				$scope.me = data ;
+
+				updateExperiences() ;
 			},
 			function (error) {
 				console.log(error) ;
@@ -85,14 +88,25 @@ app
 		).then(
 			function (data) {
 				$scope.me = data ;
+
 				
 				Auth.setCredentials($scope.me.email, $scope.me.password) ;
+				updateExperiences() ;
 			},
 			function (error) {
 				$scope.error = error ;
 				$scope.unauthorized = true ;
 			}
 		) ; 
+	}
+
+	function updateExperiences() {
+		console.log("updating experiences" ) ;
+
+		Restangular.all("experiences").getList().then(
+		function (data) {
+			$scope.experiences = data ;
+		});
 	}
 
 	$scope.logout = function() {
@@ -102,10 +116,7 @@ app
 		$scope.me = undefined ;
 	}
 
-	Restangular.all("experiences").getList().then(
-		function (data) {
-			$scope.experiences = data ;
-		});
+	
 
 
 	$scope.$watch("mood", function() {
