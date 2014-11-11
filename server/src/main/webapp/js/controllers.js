@@ -1,10 +1,9 @@
 app
 
 
-.controller('MainCtrl', function($scope, Auth, Restangular, $modal) {
+.controller('MainCtrl', function($scope, Auth, Moods, Restangular, $modal) {
 
 	$scope.loginOrRegister = "login" ;
-
 
 	$scope.mood = { 
 		"name" : "neutral", 
@@ -126,7 +125,7 @@ app
 		modalInstance.result.then(function (selectedItem) {
 			$scope.mood = selectedItem;
 		}, function () {
-			console.log.error('Modal dismissed at: ' + new Date());
+			console.log('Modal dismissed at: ' + new Date());
 		});
 	}
 
@@ -164,7 +163,7 @@ app
 				) ; 
 
 			}, function () {
-				console.log.error('Experience Modal dismissed at: ' + new Date());
+				console.log('Experience Modal dismissed at: ' + new Date());
 			});
 	}
 	
@@ -176,7 +175,7 @@ app
 
 
 
-.controller('ModalInstanceCtrl', function($scope, $modalInstance, Restangular) {
+.controller('ModalInstanceCtrl', function($scope, $modalInstance, Moods, Restangular) {
 	$scope.selected = {
 		item: {
 			'name': 'neutral',
@@ -195,17 +194,10 @@ app
 
 	$scope.$watch("selected.item", function() {
 
-		Restangular.all("moods").getList(
-			{near: [$scope.selected.item.valence, $scope.selected.item.arousal]}
-			).then(
+		if (!Moods.isReady())
+			return ;
 
-			function (data) {
-				$scope.nearbyMoods = data
-			}, 
-			function (error) {
-				console.log(error) ;
-				$scope.error = error ;
-			}) ;
+		$scope.nearbyMoods = Moods.getMoodsNear($scope.selected.item.valence, $scope.selected.item.arousal) ;
 
 		}, true) ;
 
