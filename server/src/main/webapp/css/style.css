@@ -35,3 +35,9 @@ mood-canvas svg {
   shape-rendering: crispEdges;
   vector-effect: non-scaling-stroke;
 }
+
+
+#mood_content {
+  padding-left: 15%
+}
+

@@ -1,7 +1,7 @@
 app
 
 
-.controller('MainCtrl', function($scope, Auth, Restangular) {
+.controller('MainCtrl', function($scope, Auth, Restangular, $modal) {
 
 	$scope.loginOrRegister = "login" ;
 
@@ -56,7 +56,7 @@ app
 				$scope.error = error ;
 				$scope.unauthorized = true ;
 			}
-		) ;
+			) ;
 	}
 
 	$scope.register = function() {
@@ -79,20 +79,21 @@ app
 		$scope.unauthorized = false ;
 
 		Restangular.all("users").post(
-			{
-				email:$scope.email, 
-				password:$scope.password
-			}
+		{
+			email:$scope.email, 
+			password:$scope.password
+		}
 		).then(
-			function (data) {
-				$scope.me = data ;
-				
-				Auth.setCredentials($scope.me.email, $scope.me.password) ;
-			},
-			function (error) {
-				$scope.error = error ;
-				$scope.unauthorized = true ;
-			}
+		function (data) {
+			$scope.me = data ;
+
+			Auth.setCredentials($scope.me.email, $scope.me.password) ;
+		},
+		function (error) {
+			$scope.error = error ;
+			$scope.unauthorized = true ;
+			console.log(error) ;
+		}
 		) ; 
 	}
 
@@ -103,12 +104,95 @@ app
 		$scope.me = undefined ;
 	}
 
+	$scope.setMood = function(size) {
+		var modalInstance = $modal.open({
+			templateUrl: 'moodContent.html',
+			controller: 'ModalInstanceCtrl',
+			size: size,
+		});
 
-	$scope.$watch("mood", function() {
+		modalInstance.result.then(function (selectedItem) {
+			$scope.mood = selectedItem;
+		}, function () {
+			console.log.error('Modal dismissed at: ' + new Date());
+		});
+	}
+
+	$scope.addExperience = function(size, existingExperience) {
+		var modalInstance = $modal.open({
+			templateUrl: 'experienceContent.html',
+			controller: 'ExperienceModalInstanceCtrl',
+			size: size,
+			resolve: {
+				existingExp: function() {
+					return existingExperience;
+				}
+			}
+		});
+
+		modalInstance.result.then(function (newExperience) {
+			if ("string" === typeof newExperience.tags) {
+				newExperience.tags = newExperience.tags.split(';');	
+			}
+			
+			$scope.newExperiences.push(newExperience);
+			$scope.newExperience = newExperience;
+
+			Restangular.all("experiences").post(
+				newExperience
+				).then(
+				function (data) {
+					console.log(data) ;
+					Restangular.all("experiences").getList()
+						.then(function(experiences) {
+							console.log(experiences);
+							$scope.allExperiences = experiences;
+						}, function(error) {
+							console.log("Error " + error);
+						});
+				},
+				function (error) {
+					$scope.error = error ;
+					console.log(error) ;
+				}
+				) ; 
+
+			}, function () {
+				console.log.error('Experience Modal dismissed at: ' + new Date());
+			});
+	}
+	
+	$scope.newExperiences = [];
+})
+
+
+
+
+
+
+
+.controller('ModalInstanceCtrl', function($scope, $modalInstance, Restangular) {
+	$scope.selected = {
+		item: {
+			'name': 'neutral',
+			'valence': 0,
+			'arousal': 0
+		}
+	};
+
+	$scope.ok = function () {
+		$modalInstance.close($scope.selected.item);
+	};
+
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
+
+	$scope.$watch("selected.item", function() {
 
 		Restangular.all("moods").getList(
-			{near: [$scope.mood.valence, $scope.mood.arousal]}
-		).then(
+			{near: [$scope.selected.item.valence, $scope.selected.item.arousal]}
+			).then(
 
 			function (data) {
 				$scope.nearbyMoods = data
@@ -118,21 +202,53 @@ app
 				$scope.error = error ;
 			}) ;
 
-	}, true) ;
-
+		}, true) ;
 
 })
 
 
+.controller('ExperienceModalInstanceCtrl', function($scope, $modalInstance, Restangular, $modal) {
 
 
+	$scope.ok = function () {
+		$modalInstance.close($scope.experience);
+	};
 
+	$scope.cancel = function () {
+		$modalInstance.dismiss('cancel');
+	};
 
+	$scope.experience = { 'date' : new Date().getTime()};
 
+	$scope.setExperienceMood = function(size, type) {
+		var modalInstance = $modal.open({
+			templateUrl: 'moodContent.html',
+			controller: 'ModalInstanceCtrl',
+			size: size,
+			resolve: {
+				// mood: function() {
+				// 	if (type === 'before') {
+				// 		return $scope.existingExperience.moodBefore;
+				// 	} else (type === 'after') {
+				// 		return $scope.existingExperience.moodAfter;
+				// 	}
+				// }
+			}
+		});
 
+		modalInstance.result.then(function (selectMood) {
+			if (type === 'before') {
+				$scope.experience.moodBefore = selectMood;
+			} else if (type === 'after') {
+				$scope.experience.moodAfter = selectMood;
+			}
 
-
-
+		}, function () {
+			console.log('Modal dismissed at: ' + new Date());
+		});
+	}
+	
+})
 
 
 
@@ -174,28 +290,28 @@ app
 	$scope.getMethodClass = function(verb) {
 		switch(verb) {
 			case 'GET' : 
-				return "label-success" ;
+			return "label-success" ;
 			case 'POST' : 
-				return "label-primary" ;
+			return "label-primary" ;
 			case 'DELETE' : 
-				return "label-danger"
+			return "label-danger"
 		}
 	} ;
 
 	$scope.formatPath = function(path) {
-  		return path.replace(/\{([^}]*)\}/mg, "<span class='text-muted'>{$1}</span>");
-  	}
+		return path.replace(/\{([^}]*)\}/mg, "<span class='text-muted'>{$1}</span>");
+	}
 })
 
 
 .controller('ModalApiObjectCtrl', function ($scope, $modalInstance, object, models) {
 
-     	$scope.object = object ;
-    	$scope.models = models ;
+	$scope.object = object ;
+	$scope.models = models ;
 
-    	$scope.getEnumDescription = function(property) {
-      		return getEnumDescription(property.enum) ;
-      	}
+	$scope.getEnumDescription = function(property) {
+		return getEnumDescription(property.enum) ;
+	}
 }) ;
 
 

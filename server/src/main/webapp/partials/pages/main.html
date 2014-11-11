@@ -61,25 +61,79 @@
 
 
 		<hr/>
+		
+		<script type="text/ng-template" id="moodContent.html">
+	        <div class="modal-header">
+	            <h3 class="modal-title">I'm a modal!</h3>
+	        </div>
 
-
-		<div class='row'>
-
-			<div class='col-sm-4'>
-				<mood-canvas valence='mood.valence' arousal='mood.arousal'></mood-canvas>
+	        <div class='row' id="mood_content">
+				<div class='col-sm-4'>
+					<mood-canvas valence='selected.item.valence' arousal='selected.item.arousal'></mood-canvas>
+				</div>
+				
+				<div class='col-sm-4'>
+					<ul>
+						<li ng-repeat="nearbyMood in nearbyMoods">
+							<a ng-click='selected.item.name=nearbyMood.name'>{{nearbyMood.name}}</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-			
-			<div class='col-sm-8'>
-				<ul>
-					<li ng-repeat="nearbyMood in nearbyMoods">
-						<a ng-click='mood.name=nearbyMood.name'>{{nearbyMood.name}}</a>
-					</li>
-				</ul>
-			</div>
-		</div>
+
+	        Selected: <b>{{ selected.item }}</b>
+	        <div class="modal-footer">
+	            <button class="btn btn-primary" ng-click="ok()">OK</button>
+	            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	        </div>
+	    </script>
+
+		<a class='btn btn-default' ng-click='setMood("lg")'>set mood</a>
+
+		{{mood}}
+
+
+		
 
 		<hr/>
 
-		{{mood}}
+		<script type="text/ng-template" id="experienceContent.html">
+	        <div class="modal-header">
+	            <h3 class="modal-title">Please add a new experience!</h3>
+	        </div>
+
+	        <div class="experience-content">
+	        	<div id="description">
+	        		Description: <input type="textbox" ng-model="experience.description"/>
+	        	</div>
+	        	<div id="tags">
+					Tags: <input type="textbox" ng-model="experience.tags"/>
+	        	</div>
+				<div id="time">
+					Time: {{experience.date | date:'yyyy-MM-dd HH:mm:ss Z'}}
+				</div>
+				<div id="mood_before">
+					Mood before: {{experience.moodBefore}} <a class='btn btn-default' ng-click='setExperienceMood("lg", "before")'>set mood</a>
+				</div>
+				<div id="mood_after">
+					Mood after: {{experience.moodAfter}} <a class='btn btn-default' ng-click='setExperienceMood("lg", "after")'>set mood</a>
+				</div>
+	        </div>
+
+	        <div class="modal-footer">
+	            <button class="btn btn-primary" ng-click="ok()">OK</button>
+	            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	        </div>
+	    </script>
+
+		<a class='btn btn-default' ng-click='addExperience("lg")'>Add Experience</a>
+		{{ newExperience }}
+
+		<ul>
+			<li ng-repeat="exp in allExperiences">
+				<a ng-click='addExperience("lg", exp)'>{{exp.description}}</a>
+			</li>
+		</ul>
+
 	</div>
 </div>
