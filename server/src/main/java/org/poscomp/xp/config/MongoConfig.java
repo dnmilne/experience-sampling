@@ -33,4 +33,6 @@ public class MongoConfig extends AbstractMongoConfiguration
         return new MongoClient(env.getProperty("mongo.host"));
     }
 
+
+
 }

@@ -24,7 +24,7 @@ import java.util.List;
 @ComponentScan(basePackages = {"org.poscomp.xp"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z") ;
+    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z") ;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {

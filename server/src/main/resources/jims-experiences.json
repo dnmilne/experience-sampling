@@ -1,0 +1,101 @@
+[
+{
+	"description" : "went for a surf",
+	"tags" : ["nature", "exercise"],
+	"date" : "2014-11-07 06:45:00 +1100",
+	"moodBefore" : {
+		"name":"tired","valence":-0.3333333333333334,"arousal":-0.1333333333333333
+	},
+	"moodAfter" : {
+		"name":"refreshed","valence":0.4866666666666666,"arousal":-0.1266666666666667
+	}
+},
+{
+	"description" : "missed the bus",
+	"tags" : [],
+	"date" : "2014-11-07 08:27:00 +1100",
+	"moodBefore" : {
+		"name":"stressed","valence":-0.45333333333333337,"arousal":0.21999999999999997
+	},
+	"moodAfter" : {
+		"name":"embarrassed","valence":-0.2866666666666666,"arousal":0.2466666666666666
+	}
+},
+{
+	"description" : "got yelled at for being late",
+	"tags" : ["work"],
+	"date" : "2014-11-07 09:15:00 +1100",
+	"moodBefore" : {
+		"name":"stressed","valence":-0.45333333333333337,"arousal":0.21999999999999997
+	},
+	"moodAfter" : {
+		"name":"crappy","valence":-0.6799999999999999,"arousal":0.30000000000000004
+	}
+},
+{
+	"description" : "caught up with viv",
+	"tags" : ["work","social"],
+	"date" : "2014-11-07 13:00:00 +1100",
+	"moodBefore" : {
+		"name":"stressed","valence":-0.45333333333333337,"arousal":0.21999999999999997
+	},
+	"moodAfter" : {
+		"name":"optimistic","valence":0.48,"arousal":-0.12000000000000005
+	}
+},
+{
+	"description" : "nailed the BobCorp preso",
+	"tags" : ["work"],
+	"date" : "2014-11-07 15:45:00 +1100",
+	"moodBefore" : {
+		"name":"determined","valence":0.43999999999999995,"arousal":0.11333333333333329
+	},
+	"moodAfter" : {
+		"name":"ecstatic","valence":0.6333333333333333,"arousal":0.6533333333333333
+	}
+},
+{
+	"description" : "got a job offer from Bob",
+	"tags" : ["work"],
+	"date" : "2014-11-07 16:30:00 +1100",
+	"moodBefore" : {
+		"name":"neutral","valence":0,"arousal":0
+	},
+	"moodAfter" : {
+		"name":"cheerful","valence":0.6333333333333333,"arousal":0.6533333333333333
+	}
+},
+{
+	"description" : "went to gym",
+	"tags" : ["exercise"],
+	"date" : "2014-11-07 19:04:00 +1100",
+	"moodBefore" : {
+		"name":"neutral","valence":0,"arousal":0
+	},
+	"moodAfter" : {
+		"name":"content","valence":0.3400000000000001,"arousal":-0.5066666666666666
+	}
+},
+{
+	"description" : "beers with the boys",
+	"tags" : ["social"],
+	"date" : "2014-11-07 21:14:00 +1100",
+	"moodBefore" : {
+		"name":"neutral","valence":0,"arousal":0
+	},
+	"moodAfter" : {
+		"name":"mellow","valence":0.52,"arousal":-0.5666666666666667
+	}
+},
+{
+	"description" : "woke up with horrible hangover",
+	"tags" : [""],
+	"date" : "2014-11-08 06:30:00 +1100",
+	"moodBefore" : {
+		"name":"neutral","valence":0,"arousal":0
+	},
+	"moodAfter" : {
+		"name":"groggy","valence":-0.5933333333333333,"arousal":-0.6266666666666667
+	}
+}
+]

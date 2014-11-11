@@ -117,8 +117,8 @@ public class ExperienceController extends ControllerBase {
 
             Experience newExperience = new Experience(caller, experience) ;
 
-            handleMoodModified(newExperience.getMoodBefore(), null) ;
-            handleMoodModified(newExperience.getMoodAfter(), null);
+            moodRepo.handleMoodModified(newExperience.getMoodBefore(), null) ;
+            moodRepo.handleMoodModified(newExperience.getMoodAfter(), null);
 
             experienceRepo.save(newExperience) ;
 
@@ -138,8 +138,8 @@ public class ExperienceController extends ControllerBase {
 
             existingExperience.update(experience) ;
 
-            handleMoodModified(experience.getMoodBefore(), existingExperience.getMoodBefore()) ;
-            handleMoodModified(experience.getMoodAfter(), existingExperience.getMoodAfter());
+            moodRepo.handleMoodModified(experience.getMoodBefore(), existingExperience.getMoodBefore()) ;
+            moodRepo.handleMoodModified(experience.getMoodAfter(), existingExperience.getMoodAfter());
 
             experienceRepo.save(existingExperience) ;
 
@@ -148,39 +148,7 @@ public class ExperienceController extends ControllerBase {
 
     }
 
-    public void handleMoodModified(Mood newMood, Mood oldMood) {
 
-        if (newMood == null && oldMood == null)
-            return ;
-
-        String name ;
-        if (newMood!= null)
-            name = newMood.getName() ;
-        else
-            name = oldMood.getName() ;
-
-
-        IndexedMood mood = moodRepo.findOne(name) ;
-
-        if (mood == null) {
-
-            if (newMood == null)
-                return ;
-
-            mood = new IndexedMood(name, false, newMood.getValence(), newMood.getArousal()) ;
-        } else {
-
-            if (newMood != null)
-                mood.addSample(newMood);
-
-            if (oldMood != null)
-                mood.removeSample(oldMood);
-        }
-
-        moodRepo.save(mood) ;
-
-
-    }
 
 
 
