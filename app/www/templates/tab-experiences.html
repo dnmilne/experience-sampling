@@ -1,0 +1,9 @@
+<ion-view title="Experiences">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="experience in experiences" type="item-text-wrap" href="#/tab/experiences/{{experience.id}}">
+        {{experience.description}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

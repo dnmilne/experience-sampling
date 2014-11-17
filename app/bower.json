@@ -1,0 +1,15 @@
+{
+  "name": "xp",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.0.0-beta.13",
+    "d3":"latest",
+    "tinycolor":"latest",
+    "angular-mood":"latest",
+    "angular-base64" : "latest",
+    "restangular" : "latest",
+    "fontawesome" : "latest",
+    "moment" : "latest"
+
+  }
+}

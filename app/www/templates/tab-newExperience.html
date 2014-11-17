@@ -1,0 +1,20 @@
+<ion-view title="Add Experience">
+  <ion-content class="padding">
+
+		<div class="list">
+		  <label class="item item-input">
+		    <input type="text" ng-model='experience.description' placeholder="What happened?">
+		  </label>
+		  
+		</div>
+
+		<div>
+			<mood-canvas mood='mood'/></mood-canvas>
+
+			<p>
+				<strong>{{mood.name}}</strong>
+			</p>
+		</div>
+
+  </ion-content>
+</ion-view>
