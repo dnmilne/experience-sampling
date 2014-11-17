@@ -108,6 +108,13 @@ public class Views {
         @ApiModelProperty(value="An optional recording of how the user felt after the experience.")
         private Views.Mood moodAfter ;
 
+        //these fields are needed to implement bidirectional sync
+        @ApiModelProperty(value="The date this experience was last modified (used for sync)")
+        private Date modifiedAt ;
+
+        @ApiModelProperty(value="True if this experience has been deleted, otherwise false (used for sync)")
+        private boolean deleted ;
+
 
         private Experience() {
 
@@ -129,6 +136,9 @@ public class Views {
             this.moodBefore = new Mood(experience.getMoodBefore()) ;
             this.moodAfter = new Mood(experience.getMoodAfter()) ;
 
+
+            this.modifiedAt = experience.getModifiedAt() ;
+            this.deleted = experience.isDeleted() ;
         }
 
 
@@ -158,6 +168,14 @@ public class Views {
 
         public Mood getMoodAfter() {
             return moodAfter;
+        }
+
+        public Date getModifiedAt() {
+            return modifiedAt;
+        }
+
+        public boolean isDeleted() {
+            return deleted;
         }
     }
 

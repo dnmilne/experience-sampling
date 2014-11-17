@@ -36,6 +36,17 @@ public class ExperienceRepository {
         return m.findById(id, Experience.class) ;
     }
 
+    public List<Experience> findModifiedAfter(ObjectId userId, Date modifiedAfter) {
+
+        Query query = new Query(Criteria.where("userId").is(userId)) ;
+
+        query.addCriteria(
+                Criteria.where("modifiedAt").gt(modifiedAfter)) ;
+
+        return m.find(query, Experience.class) ;
+
+    }
+
     public List<Experience> find(ObjectId userId, Date before, Double[] moodBeforeNear, Double[] moodAfterNear, String... tags) {
 
         Query query = new Query(Criteria.where("userId").is(userId)) ;

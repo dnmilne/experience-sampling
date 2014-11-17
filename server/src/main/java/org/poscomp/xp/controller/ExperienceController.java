@@ -4,6 +4,7 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.bson.types.ObjectId;
+import org.poscomp.xp.config.WebConfig;
 import org.poscomp.xp.error.Forbidden;
 import org.poscomp.xp.error.NotFound;
 import org.poscomp.xp.error.Unauthorized;
@@ -12,7 +13,10 @@ import org.poscomp.xp.model.User;
 import org.poscomp.xp.model.Views;
 import org.poscomp.xp.repository.ExperienceRepository;
 import org.poscomp.xp.repository.MoodRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +31,8 @@ import java.util.List;
 @Controller
 @Api(value = "experiences", position = 2)
 public class ExperienceController extends ControllerBase {
+
+    private static Logger logger = LoggerFactory.getLogger(ExperienceController.class) ;
 
     @Autowired
     private ExperienceRepository experienceRepo ;
@@ -51,13 +57,18 @@ public class ExperienceController extends ControllerBase {
             @RequestParam(required = false)
             String tags[],
 
-            @ApiParam(value = "An optional filter to restrict experiences to whose mood before is near the given coordinates")
+            @ApiParam(value = "An optional filter to restrict experiences to those whose mood before is near the given coordinates")
             @RequestParam(required = false)
             Double moodBeforeNear[],
 
-            @ApiParam(value = "An optional filter to restrict experiences to whose mood after is near the given coordinates")
+            @ApiParam(value = "An optional filter to restrict experiences to those whose mood after is near the given coordinates")
             @RequestParam(required = false)
             Double moodAfterNear[],
+
+            @RequestParam(required = false)
+            @ApiParam(value = "An optional filter to restrict experiences to those modified after the given date (useful for syncing)")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            Date modifiedAfter,
 
             @RequestHeader(value="Authorization")
             String auth
@@ -66,9 +77,12 @@ public class ExperienceController extends ControllerBase {
 
         User caller = getCaller(auth) ;
 
-        List<Experience> experiences = experienceRepo.find(caller.getId(), before, moodBeforeNear, moodAfterNear, tags) ;
+        if (modifiedAfter != null) {
 
-        return hydrate(experiences, caller) ;
+            logger.info(WebConfig.dateFormat.format(modifiedAfter)) ;
+            return hydrate(experienceRepo.findModifiedAfter(caller.getId(), modifiedAfter), caller);
+        }else
+            return hydrate(experienceRepo.find(caller.getId(), before, moodBeforeNear, moodAfterNear, tags), caller) ;
 
     }
 

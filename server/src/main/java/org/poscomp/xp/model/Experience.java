@@ -77,6 +77,7 @@ public class Experience {
             this.moodAfter = Mood.NEUTRAL ;
 
         this.modifiedAt = new Date() ;
+        this.deleted = x.isDeleted() ;
 
     }
 

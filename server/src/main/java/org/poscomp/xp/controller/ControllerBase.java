@@ -30,7 +30,7 @@ public class ControllerBase {
         if (auth == null || !auth.startsWith("Basic"))
             throw new Unauthorized("No authorization header") ;
 
-        logger.info("header: " + auth) ;
+        //logger.info("header: " + auth) ;
 
         String base64Credentials = auth.substring("Basic".length()).trim();
         String credentials = new String(Base64.decode(base64Credentials), Charset.forName("UTF-8"));
@@ -40,8 +40,8 @@ public class ControllerBase {
         String screenName = values[0] ;
         String password = values[1] ;
 
-        logger.info("screenName " + screenName) ;
-        logger.info("password " + password) ;
+        //logger.info("screenName " + screenName) ;
+        //logger.info("password " + password) ;
 
         User user = userRepo.findByScreenName(screenName) ;
 
