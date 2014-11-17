@@ -1,14 +1,11 @@
-angular.module('xp.filters', [])
+app
 
-.filter('markdown', function() {
+.filter('fromNow', function() {
 
-    var converter = new Showdown.converter();
 
-    return function(markdown) {
-
-        if (!markdown)
-            return ;
-
-        return converter.makeHtml(markdown) ;
-    }
+	return function(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ss Z').fromNow() ;
+	}
+    
 })
+

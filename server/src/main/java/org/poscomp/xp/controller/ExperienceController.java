@@ -8,16 +8,15 @@ import org.poscomp.xp.error.Forbidden;
 import org.poscomp.xp.error.NotFound;
 import org.poscomp.xp.error.Unauthorized;
 import org.poscomp.xp.model.Experience;
-import org.poscomp.xp.model.IndexedMood;
-import org.poscomp.xp.model.Mood;
 import org.poscomp.xp.model.User;
+import org.poscomp.xp.model.Views;
 import org.poscomp.xp.repository.ExperienceRepository;
 import org.poscomp.xp.repository.MoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +41,7 @@ public class ExperienceController extends ControllerBase {
                     ", so use **before** to get more if necessary. You can also filter by one or more **tags**. "
     )
     @RequestMapping(value="/experiences", method= RequestMethod.GET)
-    public @ResponseBody Collection<Experience> getExperiences(
+    public @ResponseBody Collection<Views.Experience> getExperiences(
 
             @ApiParam(value = "An optional filter to page through earlier experiences")
             @RequestParam(required = false)
@@ -52,6 +51,14 @@ public class ExperienceController extends ControllerBase {
             @RequestParam(required = false)
             String tags[],
 
+            @ApiParam(value = "An optional filter to restrict experiences to whose mood before is near the given coordinates")
+            @RequestParam(required = false)
+            Double moodBeforeNear[],
+
+            @ApiParam(value = "An optional filter to restrict experiences to whose mood after is near the given coordinates")
+            @RequestParam(required = false)
+            Double moodAfterNear[],
+
             @RequestHeader(value="Authorization")
             String auth
 
@@ -59,7 +66,9 @@ public class ExperienceController extends ControllerBase {
 
         User caller = getCaller(auth) ;
 
-        return experienceRepo.find(caller.getId(), before, tags) ;
+        List<Experience> experiences = experienceRepo.find(caller.getId(), before, moodBeforeNear, moodAfterNear, tags) ;
+
+        return hydrate(experiences, caller) ;
 
     }
 
@@ -68,7 +77,7 @@ public class ExperienceController extends ControllerBase {
             notes = "Returns a single experience, identified by the given id."
     )
     @RequestMapping(value="/experiences/{experienceId}", method= RequestMethod.GET)
-    public @ResponseBody Experience getExperience(
+    public @ResponseBody Views.Experience getExperience(
 
             @ApiParam(value = "The id of the experience", required = true)
             @PathVariable
@@ -89,7 +98,7 @@ public class ExperienceController extends ControllerBase {
         if (!experience.getUserId().equals(caller.getId()))
             throw new Forbidden("You may only look at your own experiences");
 
-        return experience ;
+        return new Views.Experience(experience, caller) ;
     }
 
 
@@ -99,11 +108,11 @@ public class ExperienceController extends ControllerBase {
                     "You should only specify an id when modifying an existing experience. Ids for new experiences will be defined automatically."
     )
     @RequestMapping(value="/experiences", method= RequestMethod.POST)
-    public @ResponseBody Experience postExperience(
+    public @ResponseBody Views.Experience postExperience(
 
             @ApiParam(value = "A json object representing the created or edited experience", required = true)
             @RequestBody
-            Experience experience,
+            Views.Experience experience,
 
             @RequestHeader(value="Authorization")
             String auth
@@ -117,12 +126,9 @@ public class ExperienceController extends ControllerBase {
 
             Experience newExperience = new Experience(caller, experience) ;
 
-            moodRepo.handleMoodModified(newExperience.getMoodBefore(), null) ;
-            moodRepo.handleMoodModified(newExperience.getMoodAfter(), null);
-
             experienceRepo.save(newExperience) ;
 
-            return newExperience ;
+            return new Views.Experience(newExperience, caller) ;
 
         } else {
 
@@ -138,17 +144,24 @@ public class ExperienceController extends ControllerBase {
 
             existingExperience.update(experience) ;
 
-            moodRepo.handleMoodModified(experience.getMoodBefore(), existingExperience.getMoodBefore()) ;
-            moodRepo.handleMoodModified(experience.getMoodAfter(), existingExperience.getMoodAfter());
-
             experienceRepo.save(existingExperience) ;
 
-            return existingExperience ;
+            return new Views.Experience(existingExperience, caller) ;
         }
 
     }
 
+    public List<Views.Experience> hydrate(List<Experience> experiences, User caller) {
 
+        List<Views.Experience> hydrated = new ArrayList<Views.Experience>() ;
+
+
+        for (Experience experience:experiences)
+            hydrated.add(new Views.Experience(experience, caller)) ;
+
+
+        return hydrated ;
+    }
 
 
 

@@ -1,4 +1,4 @@
-var app = angular.module('xp', ['restangular','ui.bootstrap', 'ngRoute', 'ngSanitize', 'ngCookies', 'base64']) ;
+var app = angular.module('xp', ['restangular','ui.bootstrap', 'ngRoute', 'ngSanitize', 'ngCookies', 'base64', 'angular-mood', 'angular-swagger']) ;
 
 
 
@@ -11,9 +11,19 @@ app.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'partials/pages/main.html',
         controller: 'MainCtrl'
     })
+    .when('/login', {
+        templateUrl: 'partials/pages/loginOrRegister.html', 
+        controller: 'LoginCtrl'
+    })
+    .when('/register', {
+        templateUrl: 'partials/pages/loginOrRegister.html', 
+        controller: 'RegisterCtrl'
+    })
+    .when('/mood', {
+        templateUrl: 'partials/pages/mood.html'
+    })
     .when('/api', {
-        templateUrl: 'partials/pages/api.html', 
-        controller: 'ApiCtrl'
+        templateUrl: 'partials/pages/api.html'
     })
     .otherwise({
         redirectTo: '/'}

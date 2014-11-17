@@ -1,6 +1,5 @@
 package org.poscomp.xp.repository;
 
-import org.poscomp.xp.model.IndexedMood;
 import org.poscomp.xp.model.Mood;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.Point;
@@ -17,31 +16,27 @@ import java.util.List;
 @Repository
 public class MoodRepository {
 
-    public static final int MIN_NONCANONICAL_SAMPLES = 5 ;
+
+    public static final double MAX_DIST = Math.sqrt(0.1) ;
 
     @Autowired
     private MongoTemplate m;
 
-    public IndexedMood findOne(String feeling) {
+    public Mood findOne(String feeling) {
 
-        return m.findById(IndexedMood.normalize(feeling), IndexedMood.class) ;
+        return m.findById(feeling, Mood.class) ;
     }
 
-    public List<IndexedMood> findNear(double valence, double arousal) {
+    public List<Mood> findNear(double[] near) {
 
         Query query = new Query() ;
 
-        query.addCriteria(Criteria.where("averageValenceAndArousal").near(new Point(valence, arousal))) ;
-        query.addCriteria(
-                new Criteria().orOperator(Criteria.where("canonical").is(true), Criteria.where("totalSamples").gte(MIN_NONCANONICAL_SAMPLES))
-        ) ;
+        query.addCriteria(Criteria.where("valenceAndArousal").near(new Point(near[0], near[1])).maxDistance(MAX_DIST)) ;
 
-        query.limit(10) ;
-
-        return m.find(query, IndexedMood.class) ;
+        return m.find(query, Mood.class) ;
     }
 
-    public IndexedMood save(IndexedMood mood) {
+    public Mood save(Mood mood) {
 
         m.save(mood) ;
         return mood ;
@@ -50,51 +45,12 @@ public class MoodRepository {
 
 
     public long size() {
-        return m.count(new Query(), IndexedMood.class) ;
+        return m.count(new Query(), Mood.class) ;
     }
 
 
-    public List<IndexedMood> findAll() {
+    public List<Mood> findAll() {
 
-        Query query = new Query() ;
-        query.addCriteria(
-                new Criteria().orOperator(Criteria.where("totalSamples").gte(MIN_NONCANONICAL_SAMPLES), Criteria.where("canonical").is(true))
-        ) ;
-
-        return m.find(query, IndexedMood.class) ;
-    }
-
-
-
-    public void handleMoodModified(Mood newMood, Mood oldMood) {
-
-        if (newMood == null && oldMood == null)
-            return ;
-
-        String name ;
-        if (newMood!= null)
-            name = newMood.getName() ;
-        else
-            name = oldMood.getName() ;
-
-
-        IndexedMood mood = findOne(name) ;
-
-        if (mood == null) {
-
-            if (newMood == null)
-                return ;
-
-            mood = new IndexedMood(name, false, newMood.getValence(), newMood.getArousal()) ;
-        } else {
-
-            if (newMood != null)
-                mood.addSample(newMood);
-
-            if (oldMood != null)
-                mood.removeSample(oldMood);
-        }
-
-        save(mood) ;
+        return m.findAll(Mood.class) ;
     }
 }

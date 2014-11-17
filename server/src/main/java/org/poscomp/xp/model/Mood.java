@@ -3,19 +3,23 @@ package org.poscomp.xp.model;
 
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A mood used within an experience (e.g. mood before, mood after)
  */
 @Document
-@ApiModel(description = "A mood that is felt within an experience")
 public class Mood {
 
-    private String name ;
-    private double valence ;
-    private double arousal ;
+    public static final Mood NEUTRAL = new Mood("neutral", 0, 0) ;
 
+    @Id
+    private String name ;
+
+    @GeoSpatialIndexed
+    private double valenceAndArousal[] ;
 
     private Mood() {
 
@@ -24,24 +28,24 @@ public class Mood {
     public Mood(String name, double valence, double arousal) {
 
         this.name = name;
-        this.valence = valence;
-        this.arousal = arousal;
+        this.valenceAndArousal = new double[2] ;
+        this.valenceAndArousal[0] = valence ;
+        this.valenceAndArousal[1] = arousal ;
     }
 
-    @ApiModelProperty(value="The name of this mood")
+    public Mood(Views.Mood mood) {
+        this.name = mood.getName() ;
+
+        this.valenceAndArousal = new double[2] ;
+        this.valenceAndArousal[0] = mood.getValence() ;
+        this.valenceAndArousal[1] = mood.getArousal() ;
+    }
+
     public String getName() {
         return name;
     }
 
-    @ApiModelProperty(value="A score that ranges from -1 (highly negative, sad) to +1 (highly positive, happy)")
-    public double getValence() {
-        return valence;
+    public double[] getValenceAndArousal() {
+        return valenceAndArousal;
     }
-
-    @ApiModelProperty(value="A score that ranges from -1 (calming, tiring) to +1 (exciting, agitating)")
-    public double getArousal() {
-        return arousal;
-    }
-
-
 }

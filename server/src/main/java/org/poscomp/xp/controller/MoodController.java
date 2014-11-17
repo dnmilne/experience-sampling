@@ -4,14 +4,15 @@ import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.poscomp.xp.error.Unauthorized;
-import org.poscomp.xp.model.IndexedMood;
+import org.poscomp.xp.model.Mood;
 import org.poscomp.xp.model.User;
+import org.poscomp.xp.model.Views;
 import org.poscomp.xp.repository.MoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,14 +27,11 @@ public class MoodController extends ControllerBase {
     MoodRepository moodRepo ;
 
     @ApiOperation(
-            value = "Lists moods that have been logged by all users (not just the caller) across their experiences",
-            notes = "Lists moods that have been logged. This includes canonical moods (from existing mood lists) and ones logged by " +
-                    "users within their experiences (although the latter will only show up once they have been logged at least " + MoodRepository.MIN_NONCANONICAL_SAMPLES + " times.\n\n" +
-                    "The returned moods can be filtered to only those **near** a 2d (valence and arousal) coordinate"
+            value = "Lists moods that are available",
+            notes = "Lists moods that are available to users.  They can be filtered to only those **near** a 2d (valence and arousal) coordinate"
     )
     @RequestMapping(value="/moods", method= RequestMethod.GET)
-    public @ResponseBody
-    Collection<IndexedMood> getMoods(
+    public @ResponseBody Collection<Views.Mood> getMoods(
 
             @ApiParam(value = "An optional filter to restrict returned moods to only those located near the given 2d (valence and arousal) coordinate")
             @RequestParam(required=false)
@@ -47,9 +45,9 @@ public class MoodController extends ControllerBase {
         User caller = getCaller(auth) ;
 
         if (near == null || near.length != 2)
-            return moodRepo.findAll() ;
+            return hydrate(moodRepo.findAll()) ;
 
-        return moodRepo.findNear(near[0], near[1]) ;
+        return hydrate(moodRepo.findNear(near)) ;
     }
 
     @ApiOperation(
@@ -57,7 +55,7 @@ public class MoodController extends ControllerBase {
             notes = "Returns a single mood, as identified by the given name."
     )
     @RequestMapping(value="/moods/{name}", method= RequestMethod.GET)
-    public @ResponseBody IndexedMood getMood(
+    public @ResponseBody Views.Mood getMood(
 
             @ApiParam(value = "The name of the mood to retrieve")
             @PathVariable
@@ -70,7 +68,18 @@ public class MoodController extends ControllerBase {
 
         User caller = getCaller(auth) ;
 
-        return moodRepo.findOne(name) ;
+        return new Views.Mood(moodRepo.findOne(name)) ;
+    }
+
+
+    private List<Views.Mood> hydrate(List<Mood> moods) {
+
+        List<Views.Mood> hydrated = new ArrayList<Views.Mood>() ;
+
+        for (Mood mood:moods)
+            hydrated.add(new Views.Mood(mood)) ;
+
+        return hydrated ;
     }
 
 }

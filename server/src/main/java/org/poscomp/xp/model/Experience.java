@@ -19,46 +19,36 @@ import java.util.List;
 public class Experience {
 
     @Id
-    @ApiModelProperty(value="An automatically-assigned string that uniquely identifies this experience")
     private ObjectId id ;
 
     @Indexed
-    @ApiModelProperty(value="The date this was experienced")
     private Date date ;
 
     @Indexed
-    @ApiModelProperty(value="The id of the user who experienced it")
     private ObjectId userId ;
 
-    @Indexed
-    @ApiModelProperty(value="The id of the prompt that was sent to remind the user to log this experience. This may be null if the user logged the experience without reminding.")
-    private ObjectId promptId ;
-
-    @ApiModelProperty(value="A short description of the experience.")
     private String description ;
 
-    @ApiModelProperty(value="An optional set of tags that can be used to organize and group experiences")
+    @Indexed
     private List<String> tags ;
 
-    @ApiModelProperty(value="An optional recording of how the user felt before the experience.")
+    @Indexed
     private Mood moodBefore ;
 
-    @ApiModelProperty(value="An optional recording of how the user felt after the experience.")
+    @Indexed
     private Mood moodAfter ;
 
     //these fields are needed to implement bidirectional sync
     @Indexed
-    @ApiModelProperty(value="The last time this experience was modified (needed for syncing)")
     private Date modifiedAt ;
 
-    @ApiModelProperty(value="True if the experience has been deleted, false otherwise (needed for syncing)")
     private boolean deleted ;
 
     private Experience() {
 
     }
 
-    public Experience(User user, Experience x) {
+    public Experience(User user, Views.Experience x) {
 
         this.userId = user.getId() ;
         this.id = x.getId() ;
@@ -71,17 +61,23 @@ public class Experience {
         update(x) ;
     }
 
-    public void update(Experience x) {
-
-        this.promptId = x.getPromptId() ;
+    public void update(Views.Experience x) {
 
         this.description = x.getDescription() ;
         this.tags = x.getTags() ;
 
-        this.moodBefore = x.getMoodBefore() ;
-        this.moodAfter = x.getMoodAfter() ;
+        if (x.getMoodBefore() != null)
+            this.moodBefore = new Mood(x.getMoodBefore()) ;
+        else
+            this.moodBefore = Mood.NEUTRAL ;
+
+        if (x.getMoodAfter() != null)
+            this.moodAfter = new Mood(x.getMoodAfter()) ;
+        else
+            this.moodAfter = Mood.NEUTRAL ;
 
         this.modifiedAt = new Date() ;
+
     }
 
     public void delete() {
@@ -99,10 +95,6 @@ public class Experience {
 
     public ObjectId getUserId() {
         return userId;
-    }
-
-    public ObjectId getPromptId() {
-        return promptId;
     }
 
     public String getDescription() {

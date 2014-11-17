@@ -6,6 +6,7 @@ import org.poscomp.xp.config.WebConfig;
 import org.poscomp.xp.model.Experience;
 import org.poscomp.xp.model.Mood;
 import org.poscomp.xp.model.User;
+import org.poscomp.xp.model.Views;
 import org.poscomp.xp.repository.ExperienceRepository;
 import org.poscomp.xp.repository.MoodRepository;
 import org.poscomp.xp.repository.UserRepository;
@@ -49,7 +50,7 @@ public class DatabasePopulator implements InitializingBean {
         if (jim != null)
             return ;
 
-        jim = new User("jim@jim.com","jim") ;
+        jim = new User("jim@jim.com","jim","jim") ;
         userRepo.save(jim) ;
 
         ObjectMapper mapper = new ObjectMapper() ;
@@ -58,17 +59,12 @@ public class DatabasePopulator implements InitializingBean {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("jims-experiences.json").getFile()) ;
 
-        List<Experience> experiences = mapper.readValue(file, new TypeReference<List<Experience>>(){}) ;
+        List<Views.Experience> experiences = mapper.readValue(file, new TypeReference<List<Views.Experience>>(){}) ;
 
-        for (Experience experience:experiences) {
+        for (Views.Experience experience:experiences) {
             Experience e = new Experience(jim, experience) ;
             experienceRepo.save(e) ;
 
-            if (experience.getMoodBefore() != null)
-                moodRepo.handleMoodModified(experience.getMoodBefore(), null);
-
-            if (experience.getMoodAfter() != null)
-                moodRepo.handleMoodModified(experience.getMoodAfter(), null);
         }
 
 

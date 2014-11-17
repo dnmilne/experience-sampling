@@ -1,0 +1,59 @@
+<div class='container'>
+
+		<div class='row' ng-show='error'>
+			<div class='col-sm-12'>
+				<div class='alert alert-danger'> {{error.message}}</div>
+			</div>
+		</div>
+
+		<div class='row'>
+
+
+
+			<br/><br/>
+			
+			<div class='col-sm-offset-3 col-sm-6 '>
+
+				<form class="form-horizontal" role="form"  >
+
+					<div class="form-group">
+						<label for="inputEmail" class="col-sm-3 control-label">Screen Name</label>
+						<div class="col-sm-9">
+							<input  class="form-control" id="inputScreenName" placeholder="Screen name" ng-model="screenName">
+						</div>
+					</div>
+					<div class="form-group" ng-show="mode=='register'">
+						<label for="inputEmail" class="col-sm-3 control-label">Email</label>
+						<div class="col-sm-9">
+							<input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="email">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword" class="col-sm-3 control-label">Password</label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="password">
+						</div>
+					</div>
+					<div class="form-group" ng-show="mode=='register'">
+						<div class="col-sm-offset-3 col-sm-9">
+							<input type="password" class="form-control" id="inputPassword2" placeholder="Password (again)" ng-model="password2">
+						</div>
+					</div>
+
+					
+				</form>
+
+				<p class='text-right' ng-show='mode=="login"'>
+					<br/><br/>
+					<a class='btn btn-link' href='#/register'>I don't have an account</a>
+					<a class="btn btn-default" ng-click="login()">Log In</a>
+				</p>
+
+				<p class='text-right' ng-show='mode=="register"'>
+					<br/><br/>
+					<a class='btn btn-link' href='#/login'>I already have an account</a>
+					<a class="btn btn-default" ng-click="register()">Register</a>
+				</p>
+			</div>
+		</div>
+</div>

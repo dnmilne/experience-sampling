@@ -17,15 +17,35 @@ public class User {
     @Indexed
     private String email ;
 
+    @Indexed
+    private String screenName ;
+
     private String password ;
 
     private User() {
 
     }
 
-    public User(String email, String password) {
+    public User(String email, String screenName, String password) {
         this.email = email ;
+        this.screenName = screenName ;
         this.password = password ;
+    }
+
+    public User(Views.Me me) {
+
+        this.email = me.getEmail() ;
+        this.screenName = me.getScreenName() ;
+        this.password = me.getPassword() ;
+    }
+
+    public void update(Views.Me me) {
+
+        this.email = me.getEmail() ;
+        this.screenName = me.getScreenName() ;
+
+        if (me.getPassword() != null)
+            this.password = me.getPassword() ;
     }
 
     public ObjectId getId() {
@@ -35,6 +55,8 @@ public class User {
     public String getEmail() {
         return email;
     }
+
+    public String getScreenName() { return screenName ; }
 
     public String getPassword() {
         return password;

@@ -18,13 +18,12 @@
 
     "moment" : "latest",
 
-    "showdown" : "latest",
-
     "jquery": "latest",
 
     "fontawesome": "latest",
 
-    "d3": "latest"
+    "angular-mood": "latest",
+    "angular-swagger": "latest"
   },
   "private": true
 }

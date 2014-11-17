@@ -2,7 +2,9 @@ package org.poscomp.xp;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.poscomp.xp.model.IndexedMood;
+
+import org.poscomp.xp.model.Mood;
+import org.poscomp.xp.model.Views;
 import org.poscomp.xp.repository.MoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,7 +29,9 @@ public class MoodRetrieval {
     @Test
     public void checkMoodRetrieval() {
 
-        for (IndexedMood mood:moodRepo.findNear(-0.248, -0.53499))
+        double near[] = {-0.3, -0.5} ;
+
+        for (Mood mood:moodRepo.findNear(near))
             System.out.println(mood.getName()) ;
     }
 

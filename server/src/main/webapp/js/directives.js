@@ -3,214 +3,153 @@ app
 
 
 
-
-.directive('moodCanvas', function () {
-
-	
+.directive('experience', ["MoodGrid", "Restangular", function (MoodGrid, Restangular) {
 
 	return {
 		restrict: 'E',
 		scope: {
-			valence:'=',
-			arousal:'='
+			experience: '='
 		},
+		templateUrl:'partials/directives/experience.html',
 		link: function (scope, element, attrs) {
 
-			var width = 300 ;
-			var height = 300 ;
-			var margin = {top: -5, right: -5, bottom: -5, left: -5} ;
+			scope.getMoodStyle = function(mood) {
 
-			var xScale = d3.scale.linear().domain([-1,1]).range([0,width]) ;
-			var yScale = d3.scale.linear().domain([-1,1]).range([height,0]) ;
-
-			var drag = d3.behavior.drag()
-			    .on("dragstart", dragstarted)
-			    .on("drag", dragged)
-			    .on("dragend", dragended) ;
-
-			var svg = d3.select(element[0]).append("svg")
-			    .attr("width", width + margin.left + margin.right)
-			    .attr("height", height + margin.top + margin.bottom)
-			    .attr("cursor", "default")
-			  .append("g")
-			    .attr("transform", "translate(" + margin.left + "," + margin.right + ")") ;
-
-			var rect = svg.append("rect")
-			    .attr("width", width)
-			    .attr("height", height)
-			    .style("fill", "none")
-			    .style("pointer-events", "all");
-
-			var container = svg.append("g");
-
-
-			var handle = container.append("g")
-				  .append("circle")
-			      .attr("class", "dot")
-			      .attr("r", 15)
-			      .attr("cx", xScale(scope.valence))
-			      .attr("cy", yScale(scope.arousal))
-			      .attr("cursor", "pointer")
-			      .call(drag);
-
-			function dragstarted() {
-				console.log("drag started ") ;
-
-
-			  d3.event.sourceEvent.stopPropagation();
-			  handle.classed("dragging", true);
-			}
-
-			function dragged() {
-				//console.log("dragged cx: " + d3.event.x + " cy: " + d3.event.y) ;
-				var r = 15;
-				if(d3.event.x+r < 300 && d3.event.x-r > 0)
-			  		handle.attr("cx", d3.event.x)
-			  	if(d3.event.y+r < 300 && d3.event.y-r > 0)
-			  		handle.attr("cy", d3.event.y);
-			  	handle.style("fill",d3.hsl(d3.event.x,d3.event.y,0.8));
-			}
-
-			function dragended() {
-			  	handle.classed("dragging", false);
-
-			  	scope.$apply(function () {
-		            scope.valence = xScale.invert(handle.attr("cx")) ;
-					scope.arousal = yScale.invert(handle.attr("cy")) ;
-		        });
-			}
-
-
-		}
-
-	}
-})
-
-
-
-
-
-
-
-.directive('apiParameter', function ($sanitize, $modal) {
-
-	return {
-		restrict: 'E',
-		scope: {
-			param: '=',
-			paramIndex: '=',
-			models: '='
-		},
-		templateUrl:'apiParameter.html',
-		link: function (scope, element, attrs) {
-
-			scope.getEnumDescription = function(param) {
-
-				return getEnumDescription(param.enum) ;
-			}
-		}
-	} 
-}) 
-
-
-
-
-
-.directive('apiResponse', function ($sanitize) {
-
-	return {
-		restrict: 'E',
-		scope: {
-			response: '=',
-			responseIndex: '=',
-			models: '='
-		},
-		templateUrl:'apiResponse.html',
-		link: function (scope, element, attrs) {
-
-			scope.getResponseCodeClass = function(code) {
-
-				if (code >= 200 && code < 300)
-					return "label-success" ;
+				var m ;
+				if (mood)
+					m = mood ;
 				else
-					return "label-danger" ;
+					m = {valence:0, arousal:0} ;
+
+				return {
+					color: MoodGrid.getColor(m.valence, m.arousal) 
+				}
 			}
 
-		}
-	} 
-}) 
 
+			scope.addTag = function() {
 
-.directive('apiObjectBadge', function ($sanitize, $modal) {
+				console.log("adding " + scope.newTag) ;
 
-	return {
-		restrict: 'E',
-		scope: {
-			responseModel: '=',
-			propertyType: '=',
-			propertyRef: '=',
-			models: '='
-		},
-		templateUrl:'apiObjectBadge.html',
-		link: function (scope, element, attrs) {
-
-			scope.$watch("responseModel", handleChange(), true) ;
-			scope.$watch("propertyType", handleChange(), true) ;
-			scope.$watch("propertyRef", handleChange(), true) ;
-
-			function handleChange() {
-
-				if (!scope.responseModel && !scope.propertyType && !scope.propertyRef)
+				if (!scope.newTag)
 					return ;
 
-				if (scope.responseModel) {
+				var exp = _.clone(scope.experience) ;
 
-					var genericsRegex = /(.+)[«](.+)[»]/g;
+				if (!exp.tags)
+					exp.tags = [] ;
 
-					var match = genericsRegex.exec(scope.responseModel) ;
-
-					if(match) {
-						scope.objectName = match[2] ;
-						scope.fullObjectName = match[1] + "<" + match[2] + ">"
-					} else {
-						scope.objectName = scope.responseModel ;
-						scope.fullObjectName = scope.responseModel ;
+				exp.tags.push(scope.newTag) ;
+				exp.tags = _.uniq(exp.tags) ;
+				
+				Restangular.all('experiences').post(exp)
+				.then(
+					function (newExp) {
+						console.log(newExp) ;
+						scope.experience = newExp ;
+						scope.newTag = undefined ;
+					}, 
+					function (error) {
+						console.log(error) ;
 					}
+				) ;
 
+				
+			}
 
+			scope.removeTag = function(tag) {
 
-				} else if (scope.propertyType) {
+				if (!tag)
+					return ;
 
-					scope.objectName = scope.propertyType ;
-					scope.fullObjectName = scope.propertyType ;
+				var exp = _.clone(scope.experience) ;
 
-				} else {
-					scope.objectName = scope.propertyRef ;
-					scope.fullObjectName = scope.propertyRef ;
+				exp.tags = _.without(exp.tags, tag) ;
+
+				Restangular.all('experiences').post(exp)
+				.then(
+					function (newExp) {
+						console.log(newExp) ;
+						scope.experience = newExp ;
+					}, 
+					function (error) {
+						console.log(error) ;
+					}
+				) ;
+
+				
+			}
+
+			scope.getBackgroundStyle = function() {
+
+				var mb,ma ;
+
+				if (!scope.experience || !scope.experience.moodBefore)
+					mb = {valence:0, arousal:0} ;
+				else
+					mb = scope.experience.moodBefore ;
+
+				if (!scope.experience || !scope.experience.moodAfter)
+					ma = {valence:0, arousal:0} ;
+				else
+					ma = scope.experience.moodAfter ;
+
+				return {
+					backgroundColor: "black",
+					backgroundImage: "linear-gradient(to right, " + MoodGrid.getColor(mb.valence, mb.arousal) + "," + MoodGrid.getColor(ma.valence, ma.arousal) + ")"
 				}
-
-				if (scope.models)
-					scope.object = scope.models[scope.objectName] ;
 			}
 
-			scope.showModal = function() {
+			scope.setFilterMoodBefore = function() {
 
-				var modalInstance = $modal.open({
-					templateUrl: 'modalApiObject.html',
-					controller: ModalApiObjectCtrl,
-					size: 'large',
-					resolve: {
-						object: function () {
-							return scope.object;
-						},
-						models: function () {
-							return scope.models;
-						}
-					}
-				});
+				scope.$parent.setFilterMoodBefore(scope.experience.moodBefore) ;
 			}
+
+			scope.setFilterMoodAfter = function() {
+
+				scope.$parent.setFilterMoodAfter(scope.experience.moodAfter) ;
+			}
+
+			scope.addTagFilter = function(tag) {
+
+				scope.$parent.addTagFilter(tag) ;
+			}
+
+
+
+
+
 		}
-	} 
-}) ;
+	}
+
+
+
+}])
+
+
+
+
+.directive('onEnter', function() {
+        return function(scope, element, attrs) {
+            element.bind("keydown keypress", function(event) {
+                if(event.which === 13) {
+                    scope.$apply(function(){
+                        scope.$eval(attrs.onEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
+    })
+
+
+
+
+
+
+
+
+
 
 

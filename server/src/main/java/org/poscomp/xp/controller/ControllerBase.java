@@ -37,16 +37,16 @@ public class ControllerBase {
 
         String[] values = credentials.split(":",2);
 
-        String email = values[0] ;
+        String screenName = values[0] ;
         String password = values[1] ;
 
-        logger.info("email " + email) ;
+        logger.info("screenName " + screenName) ;
         logger.info("password " + password) ;
 
-        User user = userRepo.findByEmail(email) ;
+        User user = userRepo.findByScreenName(screenName) ;
 
         if (user == null)
-            throw new Unauthorized("Invalid email") ;
+            throw new Unauthorized("Invalid screenName") ;
 
         if (!user.getPassword().equals(password))
             throw new Unauthorized("Invalid password") ;

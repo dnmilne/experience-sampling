@@ -4,7 +4,6 @@ import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.poscomp.xp.model.Experience;
-import org.poscomp.xp.model.IndexedMood;
 import org.poscomp.xp.model.User;
 import org.poscomp.xp.repository.ExperienceRepository;
 import org.poscomp.xp.repository.MoodRepository;
@@ -39,9 +38,11 @@ public class ExperienceRetrieval {
 
         User user = userRepo.findByEmail("jim@jim.com") ;
 
+        Double[] before = {0.2,0.5} ;
+
         System.out.println("retrieving stuff for " + user.getId()) ;
 
-        for (Experience experience:experienceRepo.find(user.getId(), null, null))
+        for (Experience experience:experienceRepo.find(user.getId(), null, before, null, null))
             System.out.println(experience.getDescription()) ;
 
 

@@ -1,0 +1,52 @@
+<div class='experience has-detail'>
+
+	<p class='pull-right title'>
+
+		<a class='btn-strong' ng-style="getMoodStyle(experience.moodBefore)" ng-click='setFilterMoodBefore()'>
+			<i class="fa fa-chevron-circle-left"></i>
+			<span >{{experience.moodBefore.name}}</span>
+		</a>
+
+		&nbsp;&nbsp;
+
+		<a class='btn-strong' ng-style="getMoodStyle(experience.moodAfter)" ng-click='setFilterMoodAfter()'>
+			<i class="fa fa-chevron-circle-right"></i>
+			<span >{{experience.moodAfter.name}}</span>	
+		</a>
+
+	</p>
+
+	<p class='title'>
+		<strong>
+			{{experience.description}}
+		</strong>
+	</p>
+
+	<p class='pull-right'>
+		{{experience.date | fromNow}}
+	</p>
+
+	<p>
+		<ul class='list-inline'>
+			<li>
+				<i class="fa fa-tag"></i>
+			</li>
+
+			<li ng-repeat='tag in experience.tags'>
+				<a class='badge' ng-click='addTagFilter(tag)'>{{tag}}</a> 
+				<a class='text-danger detail' ng-click='removeTag(tag)'><i class="fa fa-times"></i></a>
+			</li>
+
+			<li class='text-muted undetail' ng-hide='experience.tags.length'>
+				<span class='text-muted small'>untagged</span>
+			</li>
+
+			<li class='detail'>
+				<input type='text' class='input-badge' placeholder='new tag' on-enter='addTag()' ng-model='newTag'></input>
+			</li>
+		</ul>
+	</p>
+
+
+
+</div>

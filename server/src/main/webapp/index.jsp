@@ -20,8 +20,10 @@
   <!--d3, for sexy visualizations -->
   <script type="text/javascript"  src="bower_components/d3/d3.min.js"></script>
 
-  <!--kd tree implementation from ubilabs -->
-  <script type="text/javascript"  src="js/lib/kd-tree.min.js"></script>
+  <!--for color manipulation -->
+  <script type="text/javascript"  src="bower_components/tinycolor/tinycolor.js"></script>
+
+  <script type="text/javascript"  src="bower_components/moment/min/moment.min.js"></script>
 
   <!--bootstrap and ui-bootstrap, used for styling and common widgets like modals-->
   <script type="text/javascript"  src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -33,6 +35,11 @@
   <!--showdown, used to convert markdown to html-->
   <script type="text/javascript"  src="bower_components/showdown/compressed/showdown.js"></script>
 
+  <script type="text/javascript"  src="bower_components/angular-mood/angular-mood.js"></script>
+  <link rel="stylesheet" href="bower_components/angular-mood/angular-mood.css">
+
+  <script type="text/javascript"  src="bower_components/angular-swagger/angular-swagger.js"></script>
+
    <!--my app -->
   <script type="text/javascript" src="js/app.js"></script>
   <link rel="stylesheet" href="css/style.css">
@@ -40,7 +47,8 @@
   <script type="text/javascript" src="js/directives.js"></script>
   <script type="text/javascript" src="js/services.js"></script>
   <script type="text/javascript" src="js/filters.js"></script>
-  <script type="text/javascript" src="js/util.js"></script>
+
+
 
 </head>
 

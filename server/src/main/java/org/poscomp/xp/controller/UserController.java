@@ -6,6 +6,7 @@ import com.wordnik.swagger.annotations.ApiParam;
 import org.poscomp.xp.error.NotFound;
 import org.poscomp.xp.error.Unauthorized;
 import org.poscomp.xp.model.User;
+import org.poscomp.xp.model.Views;
 import org.poscomp.xp.util.RandomKeyGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,26 +45,32 @@ public class UserController extends ControllerBase {
                     "* To edit an existing user, specify the new details and the user's id. You must authenticate as the user you are attempting to edit."
     )
     @RequestMapping(value="/users", method= RequestMethod.POST)
-    public @ResponseBody User postUser(
+    public @ResponseBody Views.Me postUser(
 
             @ApiParam(value = "A json object representing the new or edited user", required = true)
-            @RequestBody User user,
+            @RequestBody Views.Me me,
 
             @RequestHeader(value="Authorization", required=false)
             String auth
     ) throws Unauthorized, NotFound {
 
 
-        if (user.getId() == null) {
+        if (me.getId() == null) {
 
             //this is a new user registration
 
-            if (!isUnused(user.getEmail()))
+            if (!isEmailUnused(me.getEmail()))
                 throw new Unauthorized("An account with that email already exists") ;
 
-            userRepo.save(user) ;
+            if (!isScreenNameUnused(me.getScreenName()))
+                throw new Unauthorized("An account with that screen name already exists") ;
 
-            return user ;
+            User newUser = new User(me) ;
+
+            userRepo.save(newUser) ;
+
+
+            return new Views.Me(newUser).redactPassword();
 
         } else {
 
@@ -72,24 +79,33 @@ public class UserController extends ControllerBase {
             if (existingUser == null)
                 throw new NotFound("That user does not exist (do not specify ids for new users)") ;
 
-            if (!existingUser.getEmail().equals(user.getEmail()))
-                if (!isUnused(user.getEmail()))
+            if (!existingUser.getEmail().equals(me.getEmail()))
+                if (!isEmailUnused(me.getEmail()))
                     throw new Unauthorized("An account with that email already exists") ;
-                else
-                    existingUser.setEmail(user.getEmail()) ;
 
-            existingUser.setPassword(user.getPassword()) ;
+            if (!existingUser.getScreenName().equals(me.getScreenName()))
+                if (!isScreenNameUnused(me.getScreenName()))
+                    throw new Unauthorized("An account with that screen name already exists") ;
+
+            existingUser.update(me);
 
             userRepo.save(existingUser) ;
 
-            return existingUser ;
+            return new Views.Me(existingUser).redactPassword() ;
         }
 
     }
 
-    public boolean isUnused(String email) {
+    public boolean isEmailUnused(String email) {
 
         User u = userRepo.findByEmail(email) ;
+
+        return u == null ;
+    }
+
+    public boolean isScreenNameUnused(String screenName) {
+
+        User u = userRepo.findByScreenName(screenName) ;
 
         return u == null ;
     }

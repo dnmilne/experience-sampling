@@ -1,0 +1,20 @@
+
+			<div class="modal-body">
+	        <div >
+				<mood-canvas mood='mood' />
+			</div>
+			
+			<div class='mood-list-item' ng-repeat="nearbyMood in nearbyMoods" ng-style="getStyle(nearbyMood)" >
+				<a ng-click='mood.name=nearbyMood.name'>{{nearbyMood.name}}</a>
+			</div>
+
+			<br/>
+
+			<p class="text-center">
+				<strong ng-style="getStyle(mood)" style="font-size:larger">{{ mood.name }}</b>
+	        </div>
+
+	        <div class="modal-footer">
+	            <button class="btn btn-primary" ng-click="ok()">OK</button>
+	            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+	        </div>

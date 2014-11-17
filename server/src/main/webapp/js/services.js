@@ -35,69 +35,6 @@ app
 
 
 
-.factory('Moods', ['Restangular', function (Restangular) {
-
-    var moodMap ;
-    var moodTree ;
-    var ready = false ;
-
-    var distance = function(moodA, moodB){
-        return Math.pow(moodA.averageValence - moodB.averageValence, 2) +  Math.pow(moodA.averageArousal - moodB.averageArousal, 2);
-    } ;
-
-
-
-
-    Restangular.all("moods").getList().then(
-        function (moods) {
-            console.log(moods) ;
-
-            moodTree = new kdTree(moods, distance, ["averageValence", "averageArousal"]);
-
-            moodMap = {} ;
-            _.each(moods, function(mood) {
-                moodMap[mood.name] = mood ;
-            }) ;
-
-            ready = true ;
-        },
-        function (error) {
-            console.log(error) ;
-        }
-    ) ;
-
-
-    return {
-
-        isReady: function() {
-            return ready ;
-        },
-        getMood: function(moodName) {
-            return moodMap[moodName] ;
-        },
-        getMoodsNear: function(v, a) {
-
-            console.log(v + "   -   " + a) ;
-
-            var nearestPoints = moodTree.nearest({ averageValence: v, averageArousal: a }, 10);
-
-            var nearestMoods = [] ;
-
-            _.each(nearestPoints, function(point) {
-                nearestMoods.push(point[0]) ;
-            }) ;
-
-            console.log(nearestMoods) ;
-
-            return nearestMoods ;
-        }
-    }
-
-
-
-}]) ;
-
-
 
 
 
