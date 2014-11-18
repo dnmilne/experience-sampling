@@ -1,9 +1,54 @@
 <ion-view title="Experiences">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="experience in experiences" type="item-text-wrap" href="#/tab/experiences/{{experience.id}}">
-        {{experience.description}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+<ion-content>
+<ion-list>
+<!--href="#/tab/experiences/{{experience.id}}"-->
+<ion-item ng-repeat="experience in experiences | orderBy: 'description' " type="item-text-wrap"  style="padding-top:5px !important;padding-bottom=0px !important;">
+<div class="row">
+    <div class="col col-67" >
+       {{experience.description}}
+   </div>
+   <div class="col" >
+    <a class='btn-strong' ng-style="getMoodStyle(experience.moodBefore)" ng-click='setFilterMoodBefore()'>
+     <i class="fa fa-chevron-circle-left"></i>
+     <span >{{experience.moodBefore.name}}</span>
+ </a>
+</div>
+<div class="col" >
+    <a class='btn-strong' ng-style="getMoodStyle(experience.moodBefore)" ng-click='setFilterMoodBefore()'>
+     <i class="fa fa-chevron-circle-left"></i>
+     <span >{{experience.moodAfter.name}}</span>
+ </a>
+</div>
+<!--{{experience.moodBefore.name}}-->
+</div>
+<div class="row">
+    <div class="col col-80">
+        <ul class='list-inline' style="margin-bottom:0px">
+            <li>
+                <i class="fa fa-tag"></i>
+            </li>
+
+            <li ng-repeat='tag in experience.tags'>
+                <a class='ignore_ionic_badge' >{{tag}}</a> 
+                <a class='text-danger detail' ><i class="fa fa-times"></i></a>
+            </li>
+
+            <li class='text-muted undetail' ng-hide='experience.tags.length'>
+                <span class='text-muted small'>untagged</span>
+            </li>
+
+            <li class='detail'>
+                <input type='text' class='input-badge' placeholder='new tag'  ng-model='newTag'></input>
+            </li>
+        </ul>
+    </div>
+    <div class="col" >
+        {{experience.date | fromNow}}
+    </div>
+</div>
+
+
+</ion-item>
+</ion-list>
+</ion-content>
 </ion-view>

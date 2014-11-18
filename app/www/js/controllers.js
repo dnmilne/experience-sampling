@@ -177,7 +177,7 @@ angular.module('xp.controllers', ['restangular'])
 
 
 
-.controller('ExperiencesCtrl', function($scope, $location, Auth, Experiences) {
+.controller('ExperiencesCtrl', ["MoodGrid","$scope", "$location", "Auth", "Experiences","$filter", function(MoodGrid,$scope, $location, Auth, Experiences, $filter) {
 
 	if (!Auth.hasCredentials()) {
 		console.log("redirecting to login") ;
@@ -188,8 +188,62 @@ angular.module('xp.controllers', ['restangular'])
 	
 	function updateExperiences() {
 		$scope.experiences = Experiences.getAll() ;
+		//alert($scope.experiences.size);
 	}
-}) 
+
+	$scope.getMoodStyle = function(mood) 
+	{
+
+		var m ;
+		if (mood)
+			m = mood ;
+		else
+			m = {valence:0, arousal:0} ;
+		return {color: MoodGrid.getColor(m.valence, m.arousal)}
+	}
+	// $scope.addTag = function(index) {
+
+	// 			console.log("adding " + $scope.newTag) ;
+
+	// 			if (!scope.newTag)
+	// 				return ;
+
+	// 			/*var exp;
+	// 			var i=0;
+	// 			for (i = 0; i < experiences.length; i++) { 
+ //   					 var temp=experiences[i];
+ //   					 if (temp.id==id)
+ //   					 {
+ //   					 	exp=temp;
+ //   					 }
+	// 			}
+	// 			if(!exp)
+	// 				return;*/
+	// 			var exp = _.clone($scope.experiences[index]) ;
+
+	// 			if (!exp.tags)
+	// 				exp.tags = [] ;
+
+	// 			exp.tags.push(scope.newTag) ;
+	// 			exp.tags = _.uniq(exp.tags) ;
+				
+	// 			$scope.experiences[i]=exp;
+				
+				
+	// 		}
+
+	// 		$scope.removeTag = function(tag,id) {
+
+	// 			if (!tag)
+	// 				return ;
+
+	// 			var exp = _.clone($scope.experiences[id]) ;
+
+	// 			exp.tags = _.without(exp.tags, tag) ;
+
+				
+	// 		}
+}]) 
 
 .controller('ExperienceDetailCtrl', function($scope, $stateParams, $location, Auth, Experiences) {
 

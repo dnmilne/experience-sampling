@@ -6,6 +6,7 @@
     "d3":"latest",
     "tinycolor":"latest",
     "angular-mood":"latest",
+    "bootstrap": "latest",
     "angular-base64" : "latest",
     "restangular" : "latest",
     "fontawesome" : "latest",
