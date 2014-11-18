@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by dmilne on 25/06/2014.
@@ -23,8 +24,6 @@ import java.util.List;
 @EnableWebMvc
 @ComponentScan(basePackages = {"org.poscomp.xp"})
 public class WebConfig extends WebMvcConfigurerAdapter {
-
-    public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z") ;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -42,8 +41,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter() ;
 
-        converter.getObjectMapper()
-                .setDateFormat(dateFormat) ;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         SimpleModule module = new SimpleModule();
         module.addSerializer(ObjectId.class, new IdFormatting.IdSerializer());

@@ -78,8 +78,6 @@ public class ExperienceController extends ControllerBase {
         User caller = getCaller(auth) ;
 
         if (modifiedAfter != null) {
-
-            logger.info(WebConfig.dateFormat.format(modifiedAfter)) ;
             return hydrate(experienceRepo.findModifiedAfter(caller.getId(), modifiedAfter), caller);
         }else
             return hydrate(experienceRepo.find(caller.getId(), before, moodBeforeNear, moodAfterNear, tags), caller) ;

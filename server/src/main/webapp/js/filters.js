@@ -4,7 +4,7 @@ app
 
 
 	return function(date) {
-		return moment(date, 'YYYY-MM-DD HH:mm:ss Z').fromNow() ;
+		return moment(date).fromNow() ;
 	}
     
 })

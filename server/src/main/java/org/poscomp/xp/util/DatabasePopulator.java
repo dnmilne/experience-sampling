@@ -18,7 +18,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by dmilne on 11/11/14.
@@ -54,7 +57,7 @@ public class DatabasePopulator implements InitializingBean {
         userRepo.save(jim) ;
 
         ObjectMapper mapper = new ObjectMapper() ;
-        mapper.setDateFormat(WebConfig.dateFormat) ;
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")) ;
 
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("jims-experiences.json").getFile()) ;
