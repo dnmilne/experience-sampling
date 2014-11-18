@@ -1,1 +1,31 @@
 /* Empty. Add your own CSS if you like */
+.ignore_ionic_badge
+{
+	background-color: rgb(119, 119, 119) !important;
+border-bottom-left-radius: 10px !important;
+border-bottom-right-radius: 10px !important;
+border-top-left-radius: 10px !important;
+border-top-right-radius: 10px !important;
+box-sizing: border-box !important;
+color: rgb(255, 255, 255) !important;
+cursor: pointer !important;
+display: inline-block !important;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+font-size: 12px !important;
+font-weight: bold !important;
+height: 18px !important;
+line-height: 12px !important;
+list-style-image: none !important;
+list-style-position: outside !important;
+list-style-type: none !important;
+min-width: 10px !important;
+padding-bottom: 3px !important;
+padding-left: 7px !important;
+padding-right: 7px !important;
+padding-top: 3px !important;
+text-align: center !important;
+text-decoration: none !important;
+vertical-align: baseline !important;
+white-space: nowrap !important;
+width: 112px !important;
+}
