@@ -1,5 +1,6 @@
 package org.poscomp.xp.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.bson.types.ObjectId;
 import org.poscomp.xp.util.IdFormatting;
@@ -43,6 +44,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        converter.getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         SimpleModule module = new SimpleModule();
         module.addSerializer(ObjectId.class, new IdFormatting.IdSerializer());
