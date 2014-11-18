@@ -1,7 +1,4 @@
-angular.module('xp.controllers', ['restangular'])
-
-
-
+angular.module('xp.controllers', ['restangular',"angular-mood"])
 
 
 .controller('LoginCtrl', function($scope, $location, Auth, Users, Syncer, Restangular) {
@@ -202,16 +199,98 @@ angular.module('xp.controllers', ['restangular'])
 })
 
 
-.controller('NewExperienceCtrl', function($scope, $location, Auth, Experiences) {
+.controller('NewExperienceCtrl', function($scope, $location, MoodGrid, Auth, Experiences,$ionicModal) {
 
 	if (!Auth.hasCredentials()) {
 		console.log("redirecting to login") ;
 		$location.path("/login") ;
 	}
-	
-	$scope.experience = {} ;
+
+	$scope.experience = {
+//        description: "stuff",
+//        moodBefore: {name: "pleasant", valence: 0.1, arousal: 0.1},
+//        moodAfter: {name: "pleasant", valence: 0.1, arousal: 0.1}
+    } ;
+
+
+    $scope.mood = {name: "pleasant", valence: 0.1, arousal: 0.1} ;
+
+     $scope.setMoodBefore = function() {
+
+         $scope.editedMood = $scope.experience.moodBefore ;
+         $scope.editing = "before" ;
+
+         $ionicModal.fromTemplateUrl('setMood.html',
+             {
+             scope: $scope,
+             animation: 'slide-in-up'
+         }).then(
+             function(modal) {
+                 console.log("modal ready") ;
+
+                 $scope.modal = modal ;
+                 modal.show() ;
+             }
+         ) ;
+     }
+
+    $scope.setMoodAfter = function() {
+
+        $scope.editedMood = $scope.experience.moodAfter ;
+        $scope.editing = "after" ;
+
+        $ionicModal.fromTemplateUrl('setMood.html',
+            {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(
+            function(modal) {
+                $scope.modal = modal ;
+                modal.show() ;
+            }
+        ) ;
+    }
+
+    $scope.addExperience = function(){
+        console.log($scope.experience);
+        Experiences.save($scope.experience) ;
+        $scope.experience = {};
+    }
+
+    $scope.getStyle = function(mood) {
+
+        if (!mood) return ;
+
+        return {
+            color: MoodGrid.getColor(mood.valence, mood.arousal)
+        }
+    }
+
 
 })
+
+
+.controller('SetMoodCtrl', function($scope) {
+     $scope.ok = function() {
+
+         if($scope.editing=='before'){
+             $scope.experience.moodBefore = $scope.editedMood ;
+//             $("#moodbeforespan").html($scope.editedMood.name);
+         } else {
+             $scope.experience.moodAfter = $scope.editedMood ;
+         }
+         $scope.editedMood = null ;
+
+         $scope.modal.remove();
+     }  ;
+
+     $scope.cancel = function() {
+
+         $scope.editedMood = null ;
+         $scope.modal.remove();
+     }
+
+ })
 
 
 

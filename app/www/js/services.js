@@ -93,12 +93,6 @@ angular.module('xp.services', ['base64'])
 }])
 
 
-
-
-
-
-
-
 .factory('Experiences', ['$localStorage', function($localStorage) {
 
   var experiences = $localStorage.getObject('experiences') ;
@@ -172,7 +166,7 @@ angular.module('xp.services', ['base64'])
     save: function(experience) {
 
       if (!experiences[experience.id]) {
-        experience.createdAt = Date() ;
+        experience.createdAt = moment().toISOString() ;
         experience.createdLocally = true ;
       } else {
 
@@ -209,7 +203,7 @@ angular.module('xp.services', ['base64'])
 
 
 
-.factory('Syncer', ['$q', 'Auth', 'Experiences', 'Syncs', 'Restangular', function($q, Auth, Experiences, Syncs, Restangular) {
+.factory('Syncer', ['$q', 'Auth', 'Users', 'Experiences', 'Syncs', 'Restangular', function($q, Auth, Users, Experiences, Syncs, Restangular) {
 
   //this will contain an identifier string for each asyncronous request
   //they are added when we start a request, and removed when the request succeeds or fails.
@@ -232,11 +226,15 @@ angular.module('xp.services', ['base64'])
 
   function handleExperienceCreatedLocally(experience, me) {
 
+      console.log("posting locally created experience") ;
+      console.log(experience) ;
+
     var exp = _.clone(experience) ;
     exp.tempId = experience.id ;
     exp.id = undefined ;
 
     pendingRequests.add("localCreate_" + exp.tempId) ;
+
 
     Restangular.all("experiences").post(
       exp
@@ -301,6 +299,8 @@ angular.module('xp.services', ['base64'])
         deferred.reject({message:"Not signed in"}) ;
         return deferred.promise ;
       }
+
+      var me = Users.getMe() ;
 
       // this bi-directional sync is implemented according to Sergey Kosik's algorithm described at 
       // http://havrl.blogspot.com.au/2013/08/synchronization-algorithm-for.html
