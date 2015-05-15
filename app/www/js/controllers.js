@@ -253,7 +253,7 @@ angular.module('xp.controllers', ['restangular',"angular-mood"])
 })
 
 
-.controller('NewExperienceCtrl', function($scope, $location, MoodGrid, Auth, Experiences,$ionicModal) {
+.controller('NewExperienceCtrl', function($scope, $location, MoodGrid, Auth, Experiences, $ionicModal) {
 
 	if (!Auth.hasCredentials()) {
 		console.log("redirecting to login") ;
@@ -274,7 +274,7 @@ angular.module('xp.controllers', ['restangular',"angular-mood"])
          $scope.editedMood = $scope.experience.moodBefore ;
          $scope.editing = "before" ;
 
-         $ionicModal.fromTemplateUrl('setMood.html',
+         $ionicModal.fromTemplateUrl('templates/modal-setMood.html',
              {
              scope: $scope,
              animation: 'slide-in-up'
@@ -293,7 +293,7 @@ angular.module('xp.controllers', ['restangular',"angular-mood"])
         $scope.editedMood = $scope.experience.moodAfter ;
         $scope.editing = "after" ;
 
-        $ionicModal.fromTemplateUrl('setMood.html',
+        $ionicModal.fromTemplateUrl('templates/modal-setMood.html',
             {
                 scope: $scope,
                 animation: 'slide-in-up'
@@ -329,7 +329,6 @@ angular.module('xp.controllers', ['restangular',"angular-mood"])
 
          if($scope.editing=='before'){
              $scope.experience.moodBefore = $scope.editedMood ;
-//             $("#moodbeforespan").html($scope.editedMood.name);
          } else {
              $scope.experience.moodAfter = $scope.editedMood ;
          }
@@ -349,6 +348,7 @@ angular.module('xp.controllers', ['restangular',"angular-mood"])
 
 
 .controller('DashCtrl', function($scope) {
+
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {

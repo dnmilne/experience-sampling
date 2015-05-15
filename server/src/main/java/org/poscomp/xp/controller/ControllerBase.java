@@ -37,6 +37,9 @@ public class ControllerBase {
 
         String[] values = credentials.split(":",2);
 
+        if (values.length != 2)
+            throw new Unauthorized("Invalid authorization header") ;
+
         String screenName = values[0] ;
         String password = values[1] ;
 
